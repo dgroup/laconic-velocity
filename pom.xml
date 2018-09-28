@@ -105,7 +105,6 @@
         <sonar.coverage.exclusions>
             **/*Exception.java,
             **/*Envelope.java,
-            com/github/dgroup/hamcrest/*.java,
             **/*Fake*.java,**/*.Fake*.java,**/**.Fake*.java,
         </sonar.coverage.exclusions>
     </properties>

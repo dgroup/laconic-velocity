@@ -42,7 +42,7 @@ public interface Resource<T> {
     /**
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      * @param args The velocity variables for template.
-     * @return HTML code for template.
+     * @return HTML/SQL/XML/etc
      * @throws ResourceException in case template format error.
      */
     T transform(RsVariable... args) throws ResourceException;
@@ -51,7 +51,7 @@ public interface Resource<T> {
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      *
      * @param args The velocity variables for template.
-     * @return HTML code for template.
+     * @return HTML/SQL/XML/etc
      * @throws ResourceException in case template format error.
      */
     T transform(Iterable<RsVariable> args) throws ResourceException;
@@ -60,7 +60,7 @@ public interface Resource<T> {
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      *
      * @param ctx The velocity context with variables.
-     * @return HTML code for template.
+     * @return HTML/SQL/XML/etc
      * @throws ResourceException in case template format error.
      */
     T transform(Scalar<VelocityContext> ctx) throws ResourceException;

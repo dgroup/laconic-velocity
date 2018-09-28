@@ -14,13 +14,9 @@
 [![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Qulice](https://img.shields.io/badge/qulice-passed-blue.svg)](http://www.qulice.com/)
-[![SQ passed](https://sonarcloud.io/api/project_badges/measure?project=com.github.dgroup.velocity%3Avelocity&metric=alert_status)](https://sonarcloud.io/dashboard/index/com.github.dgroup.velocity:velocity)
-[![SQ bugs](https://sonarcloud.io/api/project_badges/measure?project=com.github.dgroup.velocity%3Avelocity&metric=bugs)](https://sonarcloud.io/dashboard/index/com.github.dgroup.velocity:velocity)
-[![SQ tech debt](https://sonarcloud.io/api/project_badges/measure?project=com.github.dgroup.velocity%3Avelocity&metric=sqale_index)](https://sonarcloud.io/dashboard/index/com.github.dgroup.velocity:velocity)
+[![SQ passed](https://sonarcloud.io/api/project_badges/measure?project=com.github.dgroup%3Avelocity&metric=alert_status)](https://sonarcloud.io/dashboard/index/com.github.dgroup.velocity:velocity)
 [![Codebeat](https://codebeat.co/badges/f61cb4a4-660f-4149-bbc6-8b66fec90941)](https://codebeat.co/projects/github-com-dgroup-velocity-master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a44d11a620da4ff0a6ff294ff9045aa3)](https://www.codacy.com/app/dgroup/velocity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/velocity&amp;utm_campaign=Badge_Grade)
-
-[![SQ coverage](https://sonarcloud.io/api/project_badges/measure?project=com.github.dgroup.velocity%3Avelocity&metric=coverage)](https://sonarcloud.io/dashboard/index/com.github.dgroup.velocity:velocity)
 [![Codecov](https://codecov.io/gh/dgroup/velocity/branch/master/graph/badge.svg?token=Pqdeao3teI)](https://codecov.io/gh/dgroup/velocity)
 
 1. Define velocity template `query.sql`
@@ -45,5 +41,37 @@
                 "select 1 from dual\nunion\nselect 2 from dual\n"
             )
         );
+    }
+    ```
+    where `RsText` is instance of Apache Velocity resource
+    ```java
+    /**
+     * Velocity resource for text generation (HTML,SQL,XML,etc).
+     *
+     * Reed more about Apache Velocity at
+     *  http://velocity.apache.org/engine/1.7/user-guide.html.
+     *
+     * @param <T> Type of resource.
+     * @since 0.1.0
+     */
+    public interface Resource<T> {
+
+        /**
+         * Transform the velocity template to HTML/SQL/etc using velocity variables.
+         * @param args The velocity variables for template.
+         * @return HTML/SQL/XML/etc.
+         * @throws ResourceException in case template format error.
+         */
+        T transform(RsVariable... args) throws ResourceException;
+
+        /**
+         * Transform the velocity template to HTML/SQL/etc using velocity variables.
+         *
+         * @param args The velocity variables for template.
+         * @return HTML/SQL/XML/etc
+         * @throws ResourceException in case template format error.
+         */
+        T transform(Iterable<RsVariable> args) throws ResourceException;
+        ...
     }
     ```
