@@ -1,0 +1,6 @@
+--source=.
+--verbose
+--exclude target/**/*
+--exclude docs
+--rule min-estimate:30
+--rule max-estimate:90
