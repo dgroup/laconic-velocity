@@ -1,0 +1,5 @@
+<ul>
+    #foreach($user in $users)
+        <li>$user</li>
+    #end
+</ul>

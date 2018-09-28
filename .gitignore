@@ -1,0 +1,13 @@
+/.idea/
+*.ipr
+*.iws
+*.iml
+*.class
+/target/
+/logs/
+*.patch
+/.local/
+/.oracle_jre_usage/
+/fileTemplates/
+*.sh
+*.bat
