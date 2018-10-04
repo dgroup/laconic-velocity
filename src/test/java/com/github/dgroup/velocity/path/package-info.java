@@ -23,8 +23,8 @@
  */
 
 /**
- * Unit tests for the package {@link com.github.dgroup.velocity.resource}.
+ * Unit tests for the package {@link com.github.dgroup.velocity.path}.
  *
  * @since 0.1.0
  */
-package com.github.dgroup.velocity.resource;
+package com.github.dgroup.velocity.path;

@@ -21,10 +21,10 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.resource;
+package com.github.dgroup.velocity.rs;
 
 import com.github.dgroup.velocity.Resource;
-import com.github.dgroup.velocity.ResourceException;
+import com.github.dgroup.velocity.Variable;
 import org.apache.velocity.VelocityContext;
 import org.cactoos.Func;
 import org.cactoos.Scalar;
@@ -52,19 +52,18 @@ public class RsEnvelope<T> implements Resource<T> {
     }
 
     @Override
-    public final T transform(final RsVariable... args)
-        throws ResourceException {
-        return this.transform(new ListOf<>(args));
+    public final T compose(final Variable... args) throws RsException {
+        return this.compose(new ListOf<>(args));
     }
 
     @Override
-    public final T transform(final Iterable<RsVariable> args)
-        throws ResourceException {
-        return this.transform(
+    public final T compose(final Iterable<Variable> args)
+        throws RsException {
+        return this.compose(
             () -> {
                 final VelocityContext ctx = new VelocityContext();
-                for (final RsVariable arg : args) {
-                    ctx.put(arg.getKey(), arg.getValue());
+                for (final Variable arg : args) {
+                    ctx.put(arg.name(), arg.value());
                 }
                 return ctx;
             }
@@ -73,13 +72,13 @@ public class RsEnvelope<T> implements Resource<T> {
 
     @Override
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public final T transform(final Scalar<VelocityContext> ctx)
+    public final T compose(final Scalar<VelocityContext> ctx)
         // @checkstyle IllegalCatchCheck (5 lines)
-        throws ResourceException {
+        throws RsException {
         try {
             return this.fnc.apply(ctx.value());
         } catch (final Exception cause) {
-            throw new ResourceException(cause);
+            throw new RsException(cause);
         }
     }
 

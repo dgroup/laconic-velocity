@@ -21,53 +21,30 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-package com.github.dgroup.velocity.resource;
-
-import java.util.Map;
-import org.apache.velocity.VelocityContext;
+package com.github.dgroup.velocity.rs;
 
 /**
- * The variable, which will be replaced in the velocity template.
- * Immutable single argument for {@link VelocityContext}.
+ * For exceptions occurred during transformation of Apache Velocity templates.
  *
- * @param <T> The type of variable.
  * @since 0.1.0
  */
-public final class RsVariable<T> implements Map.Entry<String, T> {
-
-    /**
-     * The Apache Velocity variable name, specified in template file.
-     */
-    private final String key;
-
-    /**
-     * The Apache Velocity variable value, specified in template file.
-     */
-    private final T val;
+public final class RsException extends Exception {
 
     /**
      * Ctor.
-     * @param key The variable name specified in template (*.vm) file.
-     * @param value The variable value specified in template (*.vm) file.
+     * @param cause The root cause.
      */
-    public RsVariable(final String key, final T value) {
-        this.key = key;
-        this.val = value;
+    public RsException(final Exception cause) {
+        super(cause);
     }
 
-    @Override
-    public String getKey() {
-        return this.key;
+    /**
+     * Ctor.
+     * @param msg The exception message.
+     * @param cause The root cause.
+     */
+    public RsException(final String msg, final Exception cause) {
+        super(msg, cause);
     }
 
-    @Override
-    public T getValue() {
-        return this.val;
-    }
-
-    @Override
-    public T setValue(final T value) {
-        throw new UnsupportedOperationException("#setValue");
-    }
 }
