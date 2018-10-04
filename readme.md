@@ -59,19 +59,21 @@
         /**
          * Transform the velocity template to HTML/SQL/etc using velocity variables.
          * @param args The velocity variables for template.
-         * @return HTML/SQL/XML/etc.
-         * @throws ResourceException in case template format error.
+         * @return HTML/SQL/XML/etc
+         * @throws RsException in case template format error.
          */
-        T transform(RsVariable... args) throws ResourceException;
+        T compose(Variable... args) throws RsException;
 
         /**
          * Transform the velocity template to HTML/SQL/etc using velocity variables.
          *
          * @param args The velocity variables for template.
          * @return HTML/SQL/XML/etc
-         * @throws ResourceException in case template format error.
+         * @throws RsException in case template format error.
          */
-        T transform(Iterable<RsVariable> args) throws ResourceException;
+        T compose(Iterable<Variable> args) throws RsException;
+
         ...
     }
+
     ```

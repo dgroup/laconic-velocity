@@ -21,30 +21,29 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity;
+
+package com.github.dgroup.velocity.path;
+
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * For exceptions occurred during transformation of Apache Velocity templates.
+ * Unit tests for class {@link PathOf}.
  *
  * @since 0.1.0
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public final class ResourceException extends Exception {
+public final class PathOfTest {
 
-    /**
-     * Ctor.
-     * @param cause The root cause.
-     */
-    public ResourceException(final Exception cause) {
-        super(cause);
+    @Test
+    public void value() throws Exception {
+        MatcherAssert.assertThat(
+            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
+                .value()
+                .toFile()
+                .getName(),
+            Matchers.equalTo("rspath.txt")
+        );
     }
-
-    /**
-     * Ctor.
-     * @param msg The exception message.
-     * @param cause The root cause.
-     */
-    public ResourceException(final String msg, final Exception cause) {
-        super(msg, cause);
-    }
-
 }

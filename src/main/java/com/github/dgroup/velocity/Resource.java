@@ -23,8 +23,8 @@
  */
 package com.github.dgroup.velocity;
 
-import com.github.dgroup.velocity.resource.RsEnvelope;
-import com.github.dgroup.velocity.resource.RsVariable;
+import com.github.dgroup.velocity.rs.RsEnvelope;
+import com.github.dgroup.velocity.rs.RsException;
 import org.apache.velocity.VelocityContext;
 import org.cactoos.Scalar;
 
@@ -43,27 +43,27 @@ public interface Resource<T> {
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      * @param args The velocity variables for template.
      * @return HTML/SQL/XML/etc
-     * @throws ResourceException in case template format error.
+     * @throws RsException in case template format error.
      */
-    T transform(RsVariable... args) throws ResourceException;
+    T compose(Variable... args) throws RsException;
 
     /**
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      *
      * @param args The velocity variables for template.
      * @return HTML/SQL/XML/etc
-     * @throws ResourceException in case template format error.
+     * @throws RsException in case template format error.
      */
-    T transform(Iterable<RsVariable> args) throws ResourceException;
+    T compose(Iterable<Variable> args) throws RsException;
 
     /**
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      *
      * @param ctx The velocity context with variables.
      * @return HTML/SQL/XML/etc
-     * @throws ResourceException in case template format error.
+     * @throws RsException in case template format error.
      */
-    T transform(Scalar<VelocityContext> ctx) throws ResourceException;
+    T compose(Scalar<VelocityContext> ctx) throws RsException;
 
     /**
      * Fake implementation for unit testing purposes.
