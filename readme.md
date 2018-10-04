@@ -45,6 +45,10 @@
     ```
     where `RsText` is instance of Apache Velocity resource
     ```java
+    package com.github.dgroup.velocity;
+
+    import ...
+
     /**
      * Velocity resource for text generation (HTML,SQL,XML,etc).
      *
