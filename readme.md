@@ -43,7 +43,7 @@
             new RsText(
                 "query.sql", "/home/dgroup/resources"
             ).transform(
-                new RsVariable<>("flag", true)
+                new RsVariable("flag", true)
             ),
             Matchers.equalTo(
                 "select 1 from dual\nunion\nselect 2 from dual\n"
