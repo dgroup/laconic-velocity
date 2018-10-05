@@ -43,7 +43,7 @@
         );
     }
     ```
-    where `RsText` is instance of Apache Velocity resource
+    where [RsText](/src/main/java/com/github/dgroup/velocity/rs/RsText.java) is instance of Apache Velocity resource
     ```java
     package com.github.dgroup.velocity;
 
