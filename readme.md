@@ -19,7 +19,15 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a44d11a620da4ff0a6ff294ff9045aa3)](https://www.codacy.com/app/dgroup/velocity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/velocity&amp;utm_campaign=Badge_Grade)
 [![Codecov](https://codecov.io/gh/dgroup/velocity/branch/master/graph/badge.svg?token=Pqdeao3teI)](https://codecov.io/gh/dgroup/velocity)
 
-1. Define velocity template `query.sql`
+1. Add mvn dependency
+    ```xml
+    <dependency>
+        <groupId>com.github.dgroup</groupId>
+        <artifactId>velocity</artifactId>
+        <version>0.1.0</version>
+    </dependency>
+    ```
+2. Define velocity template `query.sql`
     ```sql
     select 1 from dual
     #if ($flag)
@@ -27,7 +35,7 @@
     select 2 from dual
     #end
     ```
-2. Define instance of velocity template
+3. Define instance of velocity template
     ```java
     @Test
     public void transformSql() throws ResourceException {
