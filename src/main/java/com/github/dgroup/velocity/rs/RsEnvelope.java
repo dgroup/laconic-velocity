@@ -41,6 +41,7 @@ import org.cactoos.text.TextOf;
  * The envelope for {@link Resource}.
  *
  * @since 0.1.0
+ *
  * @todo #/DEV Add search by classpath resource.
  */
 public class RsEnvelope implements Resource<String> {

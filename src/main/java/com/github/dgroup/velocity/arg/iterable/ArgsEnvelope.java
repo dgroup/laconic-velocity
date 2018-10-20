@@ -32,6 +32,7 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * @param <V> The type of value.
  * @since 0.2.0
+ *
  * @todo #/DEV Implement {@code Mapped} functionality.
  */
 public class ArgsEnvelope<V> implements Arg<Iterable<V>> {
