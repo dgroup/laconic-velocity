@@ -21,47 +21,47 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity;
+package com.github.dgroup.velocity.rs;
 
-import com.github.dgroup.velocity.rs.RsException;
+import com.github.dgroup.velocity.Arg;
+import com.github.dgroup.velocity.Resource;
 import org.apache.velocity.VelocityContext;
 import org.cactoos.Scalar;
 
 /**
- * Velocity resource for text generation (HTML,SQL,XML,etc).
+ * Fake implementation for unit testing purposes.
  *
- * Reed more about Apache Velocity at
- *  http://velocity.apache.org/engine/1.7/user-guide.html.
- *
- * @param <T> Type of resource.
+ * @param <T> Type of fake resource.
  * @since 0.1.0
  */
-public interface Resource<T> {
+public final class RsFake<T> implements Resource<T> {
 
     /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
+     * The fake resource.
      */
-    T compose(Arg... args) throws RsException;
+    private final T val;
 
     /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     *
-     * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
+     * Ctor.
+     * @param val The fake resource.
      */
-    T compose(Iterable<Arg> args) throws RsException;
+    public RsFake(final T val) {
+        this.val = val;
+    }
 
-    /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     *
-     * @param ctx The velocity context with variables.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
-     */
-    T compose(Scalar<VelocityContext> ctx) throws RsException;
+    @Override
+    public T compose(final Arg... args) {
+        return this.val;
+    }
+
+    @Override
+    public T compose(final Iterable<Arg> args) {
+        return this.val;
+    }
+
+    @Override
+    public T compose(final Scalar<VelocityContext> ctx) {
+        return this.val;
+    }
 
 }

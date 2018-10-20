@@ -21,21 +21,20 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
+package com.github.dgroup.velocity.arg.iterable;
 
-package com.github.dgroup.velocity.vrb;
-
-import com.github.dgroup.velocity.Variable;
-import org.apache.velocity.VelocityContext;
+import com.github.dgroup.velocity.Arg;
+import org.cactoos.Scalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * The resource variable.
+ * Envelope for {@link Arg}.
  *
- * The variable, which will be replaced in the velocity template.
- * Immutable single argument for {@link VelocityContext}.
- *
- * @since 0.1.0
+ * @param <V> The type of value.
+ * @since 0.2.0
+ * @todo #/DEV Implement {@code Mapped} functionality.
  */
-public final class RsVariable implements Variable<Object> {
+public class ArgsEnvelope<V> implements Arg<Iterable<V>> {
 
     /**
      * The Apache Velocity variable name, specified in template file.
@@ -45,26 +44,25 @@ public final class RsVariable implements Variable<Object> {
     /**
      * The Apache Velocity variable value, specified in template file.
      */
-    private final Object val;
+    private final UncheckedScalar<Iterable<V>> val;
 
     /**
      * Ctor.
      * @param key The variable name specified in template file.
-     * @param value The variable value specified in template file.
+     * @param val The variable value specified in template file.
      */
-    public RsVariable(final String key, final Object value) {
+    public ArgsEnvelope(final String key, final Scalar<Iterable<V>> val) {
         this.key = key;
-        this.val = value;
+        this.val = new UncheckedScalar<>(val);
     }
 
     @Override
-    public String name() {
+    public final String name() {
         return this.key;
     }
 
     @Override
-    public Object value() {
-        return this.val;
+    public final Iterable<V> value() {
+        return this.val.value();
     }
-
 }

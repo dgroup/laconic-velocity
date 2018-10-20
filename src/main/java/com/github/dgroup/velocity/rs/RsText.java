@@ -24,14 +24,8 @@
 
 package com.github.dgroup.velocity.rs;
 
-import java.io.File;
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.nio.file.Path;
-import org.apache.velocity.Template;
-import org.apache.velocity.runtime.RuntimeServices;
-import org.apache.velocity.runtime.RuntimeSingleton;
-import org.cactoos.Input;
+import java.nio.file.Paths;
 import org.cactoos.Scalar;
 import org.cactoos.io.Directory;
 import org.cactoos.io.InputOf;
@@ -39,7 +33,6 @@ import org.cactoos.io.InputStreamOf;
 import org.cactoos.iterable.Filtered;
 import org.cactoos.iterable.Joined;
 import org.cactoos.iterable.Mapped;
-import org.cactoos.text.TextOf;
 
 /**
  * The Text resource.
@@ -51,7 +44,7 @@ import org.cactoos.text.TextOf;
  * @since 0.1.0
  * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  */
-public final class RsText extends RsEnvelope<String> {
+public final class RsText extends RsEnvelope {
 
     /**
      * Ctor.
@@ -59,7 +52,7 @@ public final class RsText extends RsEnvelope<String> {
      * @param dir The directory where Velocity template is placed/located.
      */
     public RsText(final String tname, final String dir) {
-        this(tname, () -> new InputOf(new InputStreamOf(new File(dir, tname))));
+        this(tname, () -> Paths.get(dir));
     }
 
     /**
@@ -69,8 +62,8 @@ public final class RsText extends RsEnvelope<String> {
      */
     @SafeVarargs
     public RsText(final String tname, final Scalar<Path>... roots) {
-        this(
-            tname,
+        super(
+            () -> tname,
             () -> {
                 if (tname == null || tname.trim().isEmpty()) {
                     throw new IllegalArgumentException(
@@ -95,36 +88,6 @@ public final class RsText extends RsEnvelope<String> {
                         ).iterator().next()
                     )
                 );
-            }
-        );
-    }
-
-    /**
-     * Ctor.
-     * @param src The Velocity template as {@link org.cactoos.Input}.
-     * @param tname The name of Velocity template.
-     */
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public RsText(final String tname, final Scalar<Input> src) {
-        super(
-            ctx -> {
-                // @checkstyle IllegalCatchCheck (20 lines)
-                try {
-                    final RuntimeServices rsrv = RuntimeSingleton
-                        .getRuntimeServices();
-                    final StringReader srdr = new StringReader(
-                        new TextOf(src.value()).asString()
-                    );
-                    final Template template = new Template();
-                    template.setRuntimeServices(rsrv);
-                    template.setData(rsrv.parse(srdr, tname));
-                    template.initDocument();
-                    final StringWriter writer = new StringWriter();
-                    template.merge(ctx, writer);
-                    return writer.toString();
-                } catch (final Exception cause) {
-                    throw new RsException(cause);
-                }
             }
         );
     }

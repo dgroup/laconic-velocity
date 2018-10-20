@@ -21,47 +21,47 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity;
+package com.github.dgroup.velocity.arg;
 
-import com.github.dgroup.velocity.rs.RsException;
-import org.apache.velocity.VelocityContext;
+import com.github.dgroup.velocity.Arg;
 import org.cactoos.Scalar;
+import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * Velocity resource for text generation (HTML,SQL,XML,etc).
+ * Envelope for {@link Arg}.
  *
- * Reed more about Apache Velocity at
- *  http://velocity.apache.org/engine/1.7/user-guide.html.
- *
- * @param <T> Type of resource.
- * @since 0.1.0
+ * @param <V> The type of value.
+ * @since 0.2.0
  */
-public interface Resource<T> {
+public class ArgEnvelope<V> implements Arg<V> {
 
     /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
+     * The Apache Velocity variable name, specified in template file.
      */
-    T compose(Arg... args) throws RsException;
+    private final String key;
 
     /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     *
-     * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
+     * The Apache Velocity variable value, specified in template file.
      */
-    T compose(Iterable<Arg> args) throws RsException;
+    private final UncheckedScalar<V> val;
 
     /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     *
-     * @param ctx The velocity context with variables.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
+     * Ctor.
+     * @param key The variable name specified in template file.
+     * @param val The variable value specified in template file.
      */
-    T compose(Scalar<VelocityContext> ctx) throws RsException;
+    public ArgEnvelope(final String key, final Scalar<V> val) {
+        this.key = key;
+        this.val = new UncheckedScalar<>(val);
+    }
 
+    @Override
+    public final String name() {
+        return this.key;
+    }
+
+    @Override
+    public final V value() {
+        return this.val.value();
+    }
 }

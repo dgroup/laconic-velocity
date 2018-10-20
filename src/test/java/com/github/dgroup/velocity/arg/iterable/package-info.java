@@ -21,7 +21,10 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 /**
- * The variables for velocity templates.
+ * Unit tests for the package {@link com.github.dgroup.velocity.arg.iterable}.
+ *
+ * @since 0.1.0
  */
-package com.github.dgroup.velocity.vrb;
+package com.github.dgroup.velocity.arg.iterable;

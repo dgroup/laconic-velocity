@@ -21,47 +21,27 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity;
 
-import com.github.dgroup.velocity.rs.RsException;
+package com.github.dgroup.velocity.arg;
+
 import org.apache.velocity.VelocityContext;
-import org.cactoos.Scalar;
 
 /**
- * Velocity resource for text generation (HTML,SQL,XML,etc).
+ * The resource variable.
  *
- * Reed more about Apache Velocity at
- *  http://velocity.apache.org/engine/1.7/user-guide.html.
+ * The variable, which will be replaced in the velocity template.
+ * Immutable single argument for {@link VelocityContext}.
  *
- * @param <T> Type of resource.
  * @since 0.1.0
  */
-public interface Resource<T> {
+public final class ArgOf extends ArgEnvelope<Object> {
 
     /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
+     * Ctor.
+     * @param key The variable name specified in template file.
+     * @param value The variable value specified in template file.
      */
-    T compose(Arg... args) throws RsException;
-
-    /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     *
-     * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
-     */
-    T compose(Iterable<Arg> args) throws RsException;
-
-    /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     *
-     * @param ctx The velocity context with variables.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
-     */
-    T compose(Scalar<VelocityContext> ctx) throws RsException;
-
+    public ArgOf(final String key, final Object value) {
+        super(key, () -> value);
+    }
 }

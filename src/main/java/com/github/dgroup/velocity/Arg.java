@@ -23,45 +23,26 @@
  */
 package com.github.dgroup.velocity;
 
-import com.github.dgroup.velocity.rs.RsException;
-import org.apache.velocity.VelocityContext;
-import org.cactoos.Scalar;
-
 /**
- * Velocity resource for text generation (HTML,SQL,XML,etc).
+ * The resource variable.
  *
- * Reed more about Apache Velocity at
- *  http://velocity.apache.org/engine/1.7/user-guide.html.
+ * The variable, which will be replaced in the velocity template.
  *
- * @param <T> Type of resource.
+ * @param <V> Type of item.
  * @since 0.1.0
  */
-public interface Resource<T> {
+public interface Arg<V> {
 
     /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
+     * Label of variable in Apache Velocity template.
+     * @return The label.
      */
-    T compose(Arg... args) throws RsException;
+    String name();
 
     /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     *
-     * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
+     * Value of variable in Apache Velocity template.
+     * @return The value.
      */
-    T compose(Iterable<Arg> args) throws RsException;
-
-    /**
-     * Transform the velocity template to HTML/SQL/etc using velocity variables.
-     *
-     * @param ctx The velocity context with variables.
-     * @return HTML/SQL/XML/etc
-     * @throws RsException in case template format error.
-     */
-    T compose(Scalar<VelocityContext> ctx) throws RsException;
+    V value();
 
 }
