@@ -41,7 +41,7 @@ public interface Resource<T> {
     /**
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
+     * @return Text, XML, JSON, SQL, HTML, etc
      * @throws RsException in case template format error.
      */
     T compose(Arg... args) throws RsException;
@@ -50,7 +50,7 @@ public interface Resource<T> {
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      *
      * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
+     * @return Text, XML, JSON, SQL, HTML, etc
      * @throws RsException in case template format error.
      */
     T compose(Iterable<Arg> args) throws RsException;
@@ -59,7 +59,7 @@ public interface Resource<T> {
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      *
      * @param ctx The velocity context with variables.
-     * @return HTML/SQL/XML/etc
+     * @return Text, XML, JSON, SQL, HTML, etc
      * @throws RsException in case template format error.
      */
     T compose(Scalar<VelocityContext> ctx) throws RsException;

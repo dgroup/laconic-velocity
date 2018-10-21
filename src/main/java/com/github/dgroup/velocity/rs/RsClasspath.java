@@ -21,63 +21,54 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.path;
+package com.github.dgroup.velocity.rs;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import com.github.dgroup.velocity.path.RelativePath;
 import java.text.MessageFormat;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.io.InputOf;
 
 /**
- * The path to the resource.
+ * Velocity resource from the classpath.
  *
- * @since 0.1.0
+ * @since 0.2.0
  */
-public final class PathOf implements Scalar<Path> {
+public final class RsClasspath extends RsEnvelope {
 
     /**
-     * The path.
-     */
-    private final Scalar<Path> src;
-
-    /**
-     * Ctor.
-     * @param pattern The path pattern for {@link MessageFormat#format}.
-     *  The default delimiter is OS depended path separator.
-     */
-    public PathOf(final String pattern) {
-        this(pattern, File.separator);
-    }
-
-    /**
-     * Ctor.
+     * Build relative path to the resource from the classpath.
+     *  For example, in case if you resource is placed to
+     *  {@code src/main/resources/com/xxx/rs.txt} then relative path is
+     *  {@code com/xxx/rs.txt}.
      * @param pattern The pattern for {@link MessageFormat#format}.
      * @param args The arguments for {@link MessageFormat#format}.
      */
-    public PathOf(final String pattern, final Object args) {
-        this(() -> Paths.get(MessageFormat.format(pattern, args)));
+    public RsClasspath(final String pattern, final Object... args) {
+        this(new RelativePath(pattern, args));
     }
 
     /**
      * Ctor.
-     * @param src The path to resource.
+     * @param rscr The relative path to resource from the classpath.
+     *  For example, in case if you resource is placed to
+     *  {@code src/main/resources/com/xxx/rs.txt} then relative path is
+     *  {@code com/xxx/rs.txt}.
      */
-    public PathOf(final Scalar<Path> src) {
-        this.src = src;
-    }
-
-    @Override
-    public Path value() throws Exception {
-        return this.src.value();
-    }
-
-    @Override
-    public String toString() {
-        return new UncheckedScalar<>(this)
-            .value()
-            .toAbsolutePath()
-            .toString();
+    public RsClasspath(final Scalar<String> rscr) {
+        super(
+            rscr,
+            () -> {
+                if (rscr == null || rscr.value() == null) {
+                    throw new IllegalArgumentException(
+                        "The resource path can't be a null"
+                    );
+                }
+                return new InputOf(
+                    Thread.currentThread()
+                        .getContextClassLoader()
+                        .getResourceAsStream(rscr.value())
+                );
+            }
+        );
     }
 }

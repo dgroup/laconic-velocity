@@ -71,7 +71,7 @@
         /**
          * Transform the velocity template to HTML/SQL/etc using velocity variables.
          * @param args The velocity variables for template.
-         * @return HTML/SQL/XML/etc
+         * @return Text, XML, JSON, SQL, HTML, etc
          * @throws RsException in case template format error.
          */
         T compose(Variable... args) throws RsException;
@@ -80,7 +80,7 @@
          * Transform the velocity template to HTML/SQL/etc using velocity variables.
          *
          * @param args The velocity variables for template.
-         * @return HTML/SQL/XML/etc
+         * @return Text, XML, JSON, SQL, HTML, etc
          * @throws RsException in case template format error.
          */
         T compose(Iterable<Variable> args) throws RsException;
