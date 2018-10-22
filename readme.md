@@ -19,7 +19,7 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/011685357fc44898a8538d3e51d8da70)](https://www.codacy.com/app/dgroup/velocity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/velocity&amp;utm_campaign=Badge_Grade)
 [![Codecov](https://codecov.io/gh/dgroup/velocity/branch/master/graph/badge.svg?token=Pqdeao3teI)](https://codecov.io/gh/dgroup/velocity)
 
-1. Add mvn dependency
+ 1. Add mvn dependency
     ```xml
     <dependency>
         <groupId>com.github.dgroup</groupId>
@@ -27,7 +27,8 @@
         <version>0.1.0</version>
     </dependency>
     ```
-2. Define velocity template `query.sql`
+
+ 2. Define velocity template `query.sql`
     ```sql
     select 1 from dual
     #if ($flag)
@@ -35,7 +36,8 @@
     select 2 from dual
     #end
     ```
-3. Define instance of velocity template
+
+ 3. Define instance of velocity template
     ```java
     @Test
     public void transformSql() throws RsException {
@@ -84,7 +86,15 @@
          */
         T compose(Iterable<Arg> args) throws RsException;
 
-        ...
+        /**
+         * Transform the velocity template to HTML/SQL/etc using velocity variables.
+         *
+         * @param ctx The velocity context with variables.
+         * @return Text, XML, JSON, SQL, HTML, etc
+         * @throws RsException in case template format error.
+         */
+        T compose(Scalar<VelocityContext> ctx) throws RsException;
+
     }
 
     ```
