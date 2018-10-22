@@ -85,7 +85,7 @@ public final class RelativePath implements Scalar<String> {
      * @return The path.
      */
     public Scalar<Path> toPath() {
-        return () -> Paths.get(this.value());
+        return () -> Paths.get(this.toString());
     }
 
 }

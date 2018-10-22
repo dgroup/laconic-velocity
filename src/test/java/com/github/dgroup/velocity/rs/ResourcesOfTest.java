@@ -22,38 +22,37 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.github.dgroup.velocity.path;
+package com.github.dgroup.velocity.rs;
 
+import com.github.dgroup.velocity.arg.ArgOf;
+import com.github.dgroup.velocity.path.PathOf;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Unit tests for class {@link PathOf}.
+ * Unit tests for class {@link ResourcesOf}.
  *
- * @since 0.1.0
+ * @since 0.2.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class PathOfTest {
+public final class ResourcesOfTest {
 
     @Test
-    public void value() throws Exception {
+    public void find() throws RsException {
         MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .value()
-                .toFile()
-                .getName(),
-            Matchers.equalTo("rspath.txt")
-        );
-    }
-
-    @Test
-    public void asString() {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .toString(),
-            Matchers.endsWith("rspath.txt")
+            new ResourcesOf(
+                "template",
+                new RsText(
+                    "find.md", new PathOf("src{0}test{0}resources")
+                )
+            )
+                .find("template")
+                .compose(
+                    new ArgOf("way", "find")
+                ),
+            Matchers.equalTo("The file was detected using `find`.")
         );
     }
 }

@@ -21,39 +21,44 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
+package com.github.dgroup.velocity.rs;
 
-package com.github.dgroup.velocity.path;
-
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import com.github.dgroup.velocity.Resource;
+import com.github.dgroup.velocity.Resources;
+import org.cactoos.Func;
+import org.cactoos.func.StickyFunc;
 
 /**
- * Unit tests for class {@link PathOf}.
+ * The envelope for {@link Resources}.
  *
- * @since 0.1.0
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> The type of resource.
+ *
+ * @since 0.2.0
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class PathOfTest {
+public class ResourcesEnvelope<T> implements Resources<T> {
 
-    @Test
-    public void value() throws Exception {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .value()
-                .toFile()
-                .getName(),
-            Matchers.equalTo("rspath.txt")
-        );
+    /**
+     * The function to evaluate the velocity resource by filename.
+     */
+    private final Func<String, Resource<T>> fnc;
+
+    /**
+     * Ctor.
+     * @param fnc The function to evaluate the velocity resource by filename.
+     */
+    public ResourcesEnvelope(final Func<String, Resource<T>> fnc) {
+        this.fnc = new StickyFunc<>(fnc);
     }
 
-    @Test
-    public void asString() {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .toString(),
-            Matchers.endsWith("rspath.txt")
-        );
+    @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public final Resource<T> find(final String fname) throws RsException {
+        // @checkstyle IllegalCatchCheck (5 lines)
+        try {
+            return this.fnc.apply(fname);
+        } catch (final Exception cause) {
+            throw new RsException(cause);
+        }
     }
+
 }

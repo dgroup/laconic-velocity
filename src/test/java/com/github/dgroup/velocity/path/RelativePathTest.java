@@ -29,31 +29,24 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Unit tests for class {@link PathOf}.
+ * Unit tests for class {@link RelativePath}.
  *
- * @since 0.1.0
+ * @since 0.2.0
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class PathOfTest {
+public final class RelativePathTest {
 
     @Test
-    public void value() throws Exception {
+    public void toPath() throws Exception {
         MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
+            new RelativePath("velocity{0}cls-loader.md")
+                .toPath()
                 .value()
                 .toFile()
                 .getName(),
-            Matchers.equalTo("rspath.txt")
+            Matchers.equalTo("cls-loader.md")
         );
     }
 
-    @Test
-    public void asString() {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .toString(),
-            Matchers.endsWith("rspath.txt")
-        );
-    }
 }

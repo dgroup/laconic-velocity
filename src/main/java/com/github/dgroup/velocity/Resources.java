@@ -21,39 +21,25 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
+package com.github.dgroup.velocity;
 
-package com.github.dgroup.velocity.path;
-
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import com.github.dgroup.velocity.rs.RsException;
 
 /**
- * Unit tests for class {@link PathOf}.
+ * Repository of velocity resources.
  *
- * @since 0.1.0
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> The type of resource.
+ * @since 0.2.0
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class PathOfTest {
+public interface Resources<T> {
 
-    @Test
-    public void value() throws Exception {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .value()
-                .toFile()
-                .getName(),
-            Matchers.equalTo("rspath.txt")
-        );
-    }
+    /**
+     * Find the velocity resource by filename in repository.
+     *
+     * @param fname The file name of velocity resource
+     * @return The resource.
+     * @throws RsException in case if resource not found.
+     */
+    Resource<T> find(String fname) throws RsException;
 
-    @Test
-    public void asString() {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .toString(),
-            Matchers.endsWith("rspath.txt")
-        );
-    }
 }
