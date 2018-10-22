@@ -38,17 +38,17 @@
 3. Define instance of velocity template
     ```java
     @Test
-        public void transformSql() throws RsException {
-            MatcherAssert.assertThat(
-                new RsText(
-                    "query.sql",
-                    new PathOf("src{0}test{0}resources")
-                ).compose(
-                    new ArgOf("flag", true)
-                ),
-                Matchers.equalTo("select 1 from dual\nunion\nselect 2 from dual\n")
-            );
-        }
+    public void transformSql() throws RsException {
+        MatcherAssert.assertThat(
+            new RsText(
+                "query.sql",
+                new PathOf("src{0}test{0}resources")
+            ).compose(
+                new ArgOf("flag", true)
+            ),
+            Matchers.equalTo("select 1 from dual\nunion\nselect 2 from dual\n")
+        );
+    }
     ```
     where [RsText](/src/main/java/com/github/dgroup/velocity/rs/RsText.java) represents Apache Velocity resource
     ```java
