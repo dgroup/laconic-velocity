@@ -41,7 +41,7 @@ public final class ResourcesOf extends ResourcesEnvelope<String> {
      * Detect the velocity resources in the classpath.
      */
     public ResourcesOf() {
-        this(fname -> new RsClasspath(fname));
+        this(RsClasspath::new);
     }
 
     /**
