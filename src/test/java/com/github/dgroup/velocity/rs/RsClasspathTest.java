@@ -52,4 +52,9 @@ public final class RsClasspathTest {
             )
         );
     }
+
+    @Test(expected = RsException.class)
+    public void resourceIsNull() throws RsException {
+        new RsClasspath(() -> null).compose();
+    }
 }

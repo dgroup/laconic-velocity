@@ -136,12 +136,12 @@ public final class RsTextTest {
     }
 
     @Test(expected = RsException.class)
-    public void templatePathIsNull() throws RsException {
+    public void templateIsNull() throws RsException {
         new RsText(null, "").compose();
     }
 
     @Test(expected = RsException.class)
-    public void templateIsNull() throws RsException {
-        new RsText("Nullable template", () -> null).compose();
+    public void rootDirectoryIsNull() throws RsException {
+        new RsText("no-root.txt").compose();
     }
 }
