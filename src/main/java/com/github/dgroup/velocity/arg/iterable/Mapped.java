@@ -23,45 +23,53 @@
  */
 package com.github.dgroup.velocity.arg.iterable;
 
-import com.github.dgroup.velocity.Arg;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import java.util.Iterator;
+import org.cactoos.Func;
+import org.cactoos.iterable.IterableOf;
+import org.cactoos.iterator.IteratorOf;
 
 /**
- * Envelope for {@link Arg}.
+ * The resource variable with mapped value.
  *
- * @param <V> The type of value.
+ * Useful when the resource value is {@code Iterable<X>} which need to be
+ *  transformed into {@code Iterable<Y>}.
+ *
+ * @param <X> Type of source item
+ * @param <Y> Type of target item
+ *
  * @since 0.2.0
  */
-public class ArgsEnvelope<V> implements Arg<Iterable<V>> {
-
-    /**
-     * The Apache Velocity variable name, specified in template file.
-     */
-    private final String key;
-
-    /**
-     * The Apache Velocity variable value, specified in template file.
-     */
-    private final UncheckedScalar<Iterable<V>> val;
+public final class Mapped<X, Y> extends ArgsEnvelope<Y> {
 
     /**
      * Ctor.
      * @param key The variable name specified in template file.
+     * @param fnc The function to map {@code <X>} into {@code <Y>}.
      * @param val The variable value specified in template file.
      */
-    public ArgsEnvelope(final String key, final Scalar<Iterable<V>> val) {
-        this.key = key;
-        this.val = new UncheckedScalar<>(val);
+    public Mapped(final String key, final Func<X, Y> fnc, final X... val) {
+        this(key, fnc, new IteratorOf<>(val));
     }
 
-    @Override
-    public final String name() {
-        return this.key;
+    /**
+     * Ctor.
+     * @param key The variable name specified in template file.
+     * @param fnc The function to map {@code <X>} into {@code <Y>}.
+     * @param val The variable value specified in template file.
+     */
+    public Mapped(final String key, final Func<X, Y> fnc,
+        final Iterator<X> val) {
+        this(key, fnc, new IterableOf<>(val));
     }
 
-    @Override
-    public final Iterable<V> value() {
-        return this.val.value();
+    /**
+     * Ctor.
+     * @param key The variable name specified in template file.
+     * @param fnc The function to map {@code <X>} into {@code <Y>}.
+     * @param val The variable value specified in template file.
+     */
+    public Mapped(final String key, final Func<X, Y> fnc,
+        final Iterable<X> val) {
+        super(key, () -> new org.cactoos.iterable.Mapped<>(fnc, val));
     }
 }

@@ -21,47 +21,44 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 package com.github.dgroup.velocity.arg.iterable;
 
-import com.github.dgroup.velocity.Arg;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import com.github.dgroup.velocity.rs.RsClasspath;
+import com.github.dgroup.velocity.rs.RsException;
+import java.io.File;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Envelope for {@link Arg}.
+ * Unit tests for class {@link Mapped}.
  *
- * @param <V> The type of value.
  * @since 0.2.0
+ * @checkstyle MagicNumberCheck (500 lines)
+ * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle StringLiteralsConcatenationCheck (500 lines)
  */
-public class ArgsEnvelope<V> implements Arg<Iterable<V>> {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class MappedTest {
 
-    /**
-     * The Apache Velocity variable name, specified in template file.
-     */
-    private final String key;
-
-    /**
-     * The Apache Velocity variable value, specified in template file.
-     */
-    private final UncheckedScalar<Iterable<V>> val;
-
-    /**
-     * Ctor.
-     * @param key The variable name specified in template file.
-     * @param val The variable value specified in template file.
-     */
-    public ArgsEnvelope(final String key, final Scalar<Iterable<V>> val) {
-        this.key = key;
-        this.val = new UncheckedScalar<>(val);
-    }
-
-    @Override
-    public final String name() {
-        return this.key;
-    }
-
-    @Override
-    public final Iterable<V> value() {
-        return this.val.value();
+    @Test
+    public void mapped() throws RsException {
+        MatcherAssert.assertThat(
+            new RsClasspath("velocity{0}mapped.md", File.separator)
+                .compose(
+                    new Mapped<>(
+                        "systems",
+                        val -> String.format("system-%s", val),
+                        10, 20, 30
+                    )
+                ),
+            Matchers.equalTo(
+                "Iterable<Integer> mapped to Iterable<String>\n"
+                    + "| system-10 |\n"
+                    + "| system-20 |\n"
+                    + "| system-30 |\n"
+            )
+        );
     }
 }
