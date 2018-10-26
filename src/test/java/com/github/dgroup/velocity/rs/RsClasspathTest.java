@@ -22,38 +22,39 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.github.dgroup.velocity.path;
+package com.github.dgroup.velocity.rs;
 
+import com.github.dgroup.velocity.arg.ArgOf;
+import com.github.dgroup.velocity.path.RelativePath;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Unit tests for class {@link PathOf}.
+ * Unit tests for class {@link RsClasspath}.
  *
- * @since 0.1.0
+ * @since 0.2
  * @checkstyle JavadocMethodCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class PathOfTest {
+public final class RsClasspathTest {
 
     @Test
-    public void value() throws Exception {
+    public void classpath() throws Exception {
         MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .value()
-                .toFile()
-                .getName(),
-            Matchers.equalTo("rspath.txt")
+            new RsClasspath(
+                new RelativePath("velocity{0}cls-loader.md")
+            ).compose(
+                new ArgOf("way", "getResourceAsStream")
+            ),
+            Matchers.equalTo(
+                "I'm going to use `getResourceAsStream` here."
+            )
         );
     }
 
-    @Test
-    public void asString() {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .toString(),
-            Matchers.endsWith("rspath.txt")
-        );
+    @Test(expected = RsException.class)
+    public void resourceIsNull() throws RsException {
+        new RsClasspath(() -> null).compose();
     }
 }

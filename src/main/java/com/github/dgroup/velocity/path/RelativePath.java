@@ -31,23 +31,25 @@ import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * The path to the resource.
+ * Relative path.
  *
- * @since 0.1.0
+ * @see Class#getResourceAsStream(String)
+ *
+ * @since 0.2
  */
-public final class PathOf implements Scalar<Path> {
+public final class RelativePath implements Scalar<String> {
 
     /**
-     * The path.
+     * The relative path.
      */
-    private final Scalar<Path> src;
+    private final Scalar<String> src;
 
     /**
      * Ctor.
      * @param pattern The path pattern for {@link MessageFormat#format}.
      *  The default delimiter is OS depended path separator.
      */
-    public PathOf(final String pattern) {
+    public RelativePath(final String pattern) {
         this(pattern, File.separator);
     }
 
@@ -56,28 +58,34 @@ public final class PathOf implements Scalar<Path> {
      * @param pattern The pattern for {@link MessageFormat#format}.
      * @param args The arguments for {@link MessageFormat#format}.
      */
-    public PathOf(final String pattern, final Object args) {
-        this(() -> Paths.get(MessageFormat.format(pattern, args)));
+    public RelativePath(final String pattern, final Object... args) {
+        this(() -> MessageFormat.format(pattern, args));
     }
 
     /**
      * Ctor.
      * @param src The path to resource.
      */
-    public PathOf(final Scalar<Path> src) {
+    public RelativePath(final Scalar<String> src) {
         this.src = src;
     }
 
     @Override
-    public Path value() throws Exception {
+    public String value() throws Exception {
         return this.src.value();
     }
 
     @Override
     public String toString() {
-        return new UncheckedScalar<>(this)
-            .value()
-            .toAbsolutePath()
-            .toString();
+        return new UncheckedScalar<>(this).value();
     }
+
+    /**
+     * Convert relative path to {@link Path}.
+     * @return The path.
+     */
+    public Scalar<Path> toPath() {
+        return () -> Paths.get(this.toString());
+    }
+
 }

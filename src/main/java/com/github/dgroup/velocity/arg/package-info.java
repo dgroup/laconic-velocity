@@ -21,39 +21,7 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-package com.github.dgroup.velocity.path;
-
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-
 /**
- * Unit tests for class {@link PathOf}.
- *
- * @since 0.1.0
- * @checkstyle JavadocMethodCheck (500 lines)
+ * The variables for velocity templates.
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class PathOfTest {
-
-    @Test
-    public void value() throws Exception {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .value()
-                .toFile()
-                .getName(),
-            Matchers.equalTo("rspath.txt")
-        );
-    }
-
-    @Test
-    public void asString() {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .toString(),
-            Matchers.endsWith("rspath.txt")
-        );
-    }
-}
+package com.github.dgroup.velocity.arg;

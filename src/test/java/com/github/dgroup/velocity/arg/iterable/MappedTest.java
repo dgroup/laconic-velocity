@@ -22,38 +22,43 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.github.dgroup.velocity.path;
+package com.github.dgroup.velocity.arg.iterable;
 
+import com.github.dgroup.velocity.rs.RsClasspath;
+import com.github.dgroup.velocity.rs.RsException;
+import java.io.File;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Unit tests for class {@link PathOf}.
+ * Unit tests for class {@link Mapped}.
  *
- * @since 0.1.0
+ * @since 0.2.0
+ * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle JavadocMethodCheck (500 lines)
+ * @checkstyle StringLiteralsConcatenationCheck (500 lines)
  */
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class PathOfTest {
+public final class MappedTest {
 
     @Test
-    public void value() throws Exception {
+    public void mapped() throws RsException {
         MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .value()
-                .toFile()
-                .getName(),
-            Matchers.equalTo("rspath.txt")
-        );
-    }
-
-    @Test
-    public void asString() {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .toString(),
-            Matchers.endsWith("rspath.txt")
+            new RsClasspath("velocity{0}mapped.md", File.separator)
+                .compose(
+                    new Mapped<>(
+                        "systems",
+                        val -> String.format("system-%s", val),
+                        10, 20, 30
+                    )
+                ),
+            Matchers.equalTo(
+                "Iterable<Integer> mapped to Iterable<String>\n"
+                    + "| system-10 |\n"
+                    + "| system-20 |\n"
+                    + "| system-30 |\n"
+            )
         );
     }
 }

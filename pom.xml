@@ -97,11 +97,11 @@
         <junit.dataprovider.version>2.0</junit.dataprovider.version>
         <!-- Code quality -->
         <code.cvrg.classes-without-tests>5</code.cvrg.classes-without-tests>
-        <code.cvrg.instructions>0.55</code.cvrg.instructions>
-        <code.cvrg.complexity>0.50</code.cvrg.complexity>
-        <code.cvrg.methods>0.55</code.cvrg.methods>
-        <code.cvrg.branch>0.50</code.cvrg.branch>
-        <code.cvrg.line>0.55</code.cvrg.line>
+        <code.cvrg.instructions>0.80</code.cvrg.instructions>
+        <code.cvrg.complexity>0.80</code.cvrg.complexity>
+        <code.cvrg.methods>0.80</code.cvrg.methods>
+        <code.cvrg.branch>0.70</code.cvrg.branch>
+        <code.cvrg.line>0.80</code.cvrg.line>
         <sonar.coverage.exclusions>
             **/*Exception.java,
             **/*Envelope.java,
@@ -419,15 +419,6 @@
                             <nexusUrl>https://oss.sonatype.org/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>
-                        <executions>
-                            <execution>
-                                <id>publish-to-mvn-central</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>release</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>

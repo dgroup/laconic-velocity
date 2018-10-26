@@ -14,12 +14,21 @@
 [![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Qulice](https://img.shields.io/badge/qulice-passed-blue.svg)](http://www.qulice.com/)
-[![SQ passed](https://sonarcloud.io/api/project_badges/measure?project=com.github.dgroup%3Avelocity&metric=alert_status)](https://sonarcloud.io/dashboard/index/com.github.dgroup.velocity:velocity)
+[![SQ passed](https://sonarcloud.io/api/project_badges/measure?project=com.github.dgroup%3Avelocity&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.github.dgroup%3Avelocity)
 [![Codebeat](https://codebeat.co/badges/f61cb4a4-660f-4149-bbc6-8b66fec90941)](https://codebeat.co/projects/github-com-dgroup-velocity-master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a44d11a620da4ff0a6ff294ff9045aa3)](https://www.codacy.com/app/dgroup/velocity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/velocity&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/011685357fc44898a8538d3e51d8da70)](https://www.codacy.com/app/dgroup/velocity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/velocity&amp;utm_campaign=Badge_Grade)
 [![Codecov](https://codecov.io/gh/dgroup/velocity/branch/master/graph/badge.svg?token=Pqdeao3teI)](https://codecov.io/gh/dgroup/velocity)
 
-1. Define velocity template `query.sql`
+ 1. Add mvn dependency
+    ```xml
+    <dependency>
+        <groupId>com.github.dgroup</groupId>
+        <artifactId>velocity</artifactId>
+        <version>0.1.0</version>
+    </dependency>
+    ```
+
+ 2. Define velocity template `query.sql`
     ```sql
     select 1 from dual
     #if ($flag)
@@ -27,23 +36,23 @@
     select 2 from dual
     #end
     ```
-2. Define instance of velocity template
+
+ 3. Define instance of velocity template
     ```java
     @Test
-    public void transformSql() throws ResourceException {
+    public void transformSql() throws RsException {
         MatcherAssert.assertThat(
             new RsText(
-                "query.sql", "/home/dgroup/resources"
-            ).transform(
-                new RsVariable<>("flag", true)
+                "query.sql",
+                new PathOf("src{0}test{0}resources")
+            ).compose(
+                new ArgOf("flag", true)
             ),
-            Matchers.equalTo(
-                "select 1 from dual\nunion\nselect 2 from dual\n"
-            )
+            Matchers.equalTo("select 1 from dual\nunion\nselect 2 from dual\n")
         );
     }
     ```
-    where [RsText](/src/main/java/com/github/dgroup/velocity/rs/RsText.java) is instance of Apache Velocity resource
+    where [RsText](/src/main/java/com/github/dgroup/velocity/rs/RsText.java) represents Apache Velocity resource
     ```java
     package com.github.dgroup.velocity;
 
@@ -63,21 +72,29 @@
         /**
          * Transform the velocity template to HTML/SQL/etc using velocity variables.
          * @param args The velocity variables for template.
-         * @return HTML/SQL/XML/etc
+         * @return Text, XML, JSON, SQL, HTML, etc
          * @throws RsException in case template format error.
          */
-        T compose(Variable... args) throws RsException;
+        T compose(Arg... args) throws RsException;
 
         /**
          * Transform the velocity template to HTML/SQL/etc using velocity variables.
          *
          * @param args The velocity variables for template.
-         * @return HTML/SQL/XML/etc
+         * @return Text, XML, JSON, SQL, HTML, etc
          * @throws RsException in case template format error.
          */
-        T compose(Iterable<Variable> args) throws RsException;
+        T compose(Iterable<Arg> args) throws RsException;
 
-        ...
+        /**
+         * Transform the velocity template to HTML/SQL/etc using velocity variables.
+         *
+         * @param ctx The velocity context with variables.
+         * @return Text, XML, JSON, SQL, HTML, etc
+         * @throws RsException in case template format error.
+         */
+        T compose(Scalar<VelocityContext> ctx) throws RsException;
+
     }
 
     ```

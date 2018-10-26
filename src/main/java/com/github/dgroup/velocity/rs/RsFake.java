@@ -21,7 +21,47 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
+package com.github.dgroup.velocity.rs;
+
+import com.github.dgroup.velocity.Arg;
+import com.github.dgroup.velocity.Resource;
+import org.apache.velocity.VelocityContext;
+import org.cactoos.Scalar;
+
 /**
- * The variables for velocity templates.
+ * Fake implementation for unit testing purposes.
+ *
+ * @param <T> Type of fake resource.
+ * @since 0.1.0
  */
-package com.github.dgroup.velocity.vrb;
+public final class RsFake<T> implements Resource<T> {
+
+    /**
+     * The fake resource.
+     */
+    private final T val;
+
+    /**
+     * Ctor.
+     * @param val The fake resource.
+     */
+    public RsFake(final T val) {
+        this.val = val;
+    }
+
+    @Override
+    public T compose(final Arg... args) {
+        return this.val;
+    }
+
+    @Override
+    public T compose(final Iterable<Arg> args) {
+        return this.val;
+    }
+
+    @Override
+    public T compose(final Scalar<VelocityContext> ctx) {
+        return this.val;
+    }
+
+}

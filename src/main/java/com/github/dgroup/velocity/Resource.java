@@ -23,7 +23,6 @@
  */
 package com.github.dgroup.velocity;
 
-import com.github.dgroup.velocity.rs.RsEnvelope;
 import com.github.dgroup.velocity.rs.RsException;
 import org.apache.velocity.VelocityContext;
 import org.cactoos.Scalar;
@@ -42,42 +41,27 @@ public interface Resource<T> {
     /**
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
+     * @return Text, XML, JSON, SQL, HTML, etc
      * @throws RsException in case template format error.
      */
-    T compose(Variable... args) throws RsException;
+    T compose(Arg... args) throws RsException;
 
     /**
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      *
      * @param args The velocity variables for template.
-     * @return HTML/SQL/XML/etc
+     * @return Text, XML, JSON, SQL, HTML, etc
      * @throws RsException in case template format error.
      */
-    T compose(Iterable<Variable> args) throws RsException;
+    T compose(Iterable<Arg> args) throws RsException;
 
     /**
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      *
      * @param ctx The velocity context with variables.
-     * @return HTML/SQL/XML/etc
+     * @return Text, XML, JSON, SQL, HTML, etc
      * @throws RsException in case template format error.
      */
     T compose(Scalar<VelocityContext> ctx) throws RsException;
-
-    /**
-     * Fake implementation for unit testing purposes.
-     * @param <T> Type of fake resource.
-     */
-    final class Fake<T> extends RsEnvelope<T> {
-
-        /**
-         * Ctor.
-         * @param rsrc The fake resource.
-         */
-        public Fake(final T rsrc) {
-            super(ctx -> rsrc);
-        }
-    }
 
 }

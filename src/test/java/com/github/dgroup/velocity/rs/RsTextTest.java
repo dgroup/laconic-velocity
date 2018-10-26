@@ -23,8 +23,8 @@
  */
 package com.github.dgroup.velocity.rs;
 
+import com.github.dgroup.velocity.arg.ArgOf;
 import com.github.dgroup.velocity.path.PathOf;
-import com.github.dgroup.velocity.vrb.RsVariable;
 import org.cactoos.list.ListOf;
 import org.cactoos.map.MapEntry;
 import org.hamcrest.MatcherAssert;
@@ -54,7 +54,7 @@ public final class RsTextTest {
             new RsText(
                 "html.vm", new PathOf("src{0}test{0}resources")
             ).compose(
-                new RsVariable(
+                new ArgOf(
                     "users", new ListOf<>("Tom", "Bob", "Hank")
                 )
             ),
@@ -75,7 +75,7 @@ public final class RsTextTest {
                 "query.sql",
                 new PathOf("src{0}test{0}resources")
             ).compose(
-                new RsVariable("flag", true)
+                new ArgOf("flag", true)
             ),
             Matchers.equalTo("select 1 from dual\nunion\nselect 2 from dual\n")
         );
@@ -87,7 +87,7 @@ public final class RsTextTest {
             new RsText(
                 "markdown.md", new PathOf("src{0}test{0}resources{0}velocity")
             ).compose(
-                new RsVariable(
+                new ArgOf(
                     "systems",
                     new ListOf<>(
                         new MapEntry<>("Windows", 10),
@@ -107,12 +107,16 @@ public final class RsTextTest {
     }
 
     @Test
-    public void classpath() throws RsException {
+    public void classpath() throws Exception {
         MatcherAssert.assertThat(
             new RsText(
-                "classpath.md", new PathOf("src{0}main{0}resources")
+                "classpath.md",
+                new PathOf("src{0}main{0}resources")
+                    .value()
+                    .toFile()
+                    .getAbsolutePath()
             ).compose(
-                new RsVariable(
+                new ArgOf(
                     "systems",
                     new ListOf<>(
                         new MapEntry<>("Windows", 10),
@@ -132,12 +136,12 @@ public final class RsTextTest {
     }
 
     @Test(expected = RsException.class)
-    public void templatePathIsNull() throws RsException {
+    public void templateIsNull() throws RsException {
         new RsText(null, "").compose();
     }
 
     @Test(expected = RsException.class)
-    public void templateIsNull() throws RsException {
-        new RsText("Nullable template", () -> null).compose();
+    public void rootDirectoryIsNull() throws RsException {
+        new RsText("no-root.txt").compose();
     }
 }

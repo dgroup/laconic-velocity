@@ -21,63 +21,61 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.path;
+package com.github.dgroup.velocity.rs;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.MessageFormat;
-import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import com.github.dgroup.velocity.Resource;
+import java.util.Map;
+import org.cactoos.Func;
+import org.cactoos.map.MapEntry;
+import org.cactoos.map.MapOf;
+import org.cactoos.map.StickyMap;
 
 /**
- * The path to the resource.
+ * The storage for textual velocity resources.
  *
- * @since 0.1.0
+ * @since 0.2.0
  */
-public final class PathOf implements Scalar<Path> {
+public final class ResourcesOf extends ResourcesEnvelope<String> {
 
     /**
-     * The path.
+     * Detect the velocity resources in the classpath.
      */
-    private final Scalar<Path> src;
-
-    /**
-     * Ctor.
-     * @param pattern The path pattern for {@link MessageFormat#format}.
-     *  The default delimiter is OS depended path separator.
-     */
-    public PathOf(final String pattern) {
-        this(pattern, File.separator);
+    public ResourcesOf() {
+        this(RsClasspath::new);
     }
 
     /**
      * Ctor.
-     * @param pattern The pattern for {@link MessageFormat#format}.
-     * @param args The arguments for {@link MessageFormat#format}.
+     * @param name The name of velocity resource.
+     * @param rsrc The velocity resource.
      */
-    public PathOf(final String pattern, final Object args) {
-        this(() -> Paths.get(MessageFormat.format(pattern, args)));
+    public ResourcesOf(final String name, final Resource<String> rsrc) {
+        this(new MapEntry<>(name, rsrc));
     }
 
     /**
      * Ctor.
-     * @param src The path to resource.
+     * @param rsrcs The velocity resources, where key is filename.
      */
-    public PathOf(final Scalar<Path> src) {
-        this.src = src;
+    @SafeVarargs
+    public ResourcesOf(final MapEntry<String, Resource<String>>... rsrcs) {
+        this(new StickyMap<>(new MapOf<>(rsrcs)));
     }
 
-    @Override
-    public Path value() throws Exception {
-        return this.src.value();
+    /**
+     * Ctor.
+     * @param rsrcs The velocity resources, where key is filename.
+     */
+    public ResourcesOf(final Map<String, Resource<String>> rsrcs) {
+        this(rsrcs::get);
     }
 
-    @Override
-    public String toString() {
-        return new UncheckedScalar<>(this)
-            .value()
-            .toAbsolutePath()
-            .toString();
+    /**
+     * Ctor.
+     * @param fnc The function to evaluate the velocity resource by filename.
+     */
+    public ResourcesOf(final Func<String, Resource<String>> fnc) {
+        super(fnc);
     }
+
 }

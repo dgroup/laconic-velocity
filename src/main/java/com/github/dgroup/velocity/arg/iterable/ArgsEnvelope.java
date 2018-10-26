@@ -21,63 +21,47 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.path;
+package com.github.dgroup.velocity.arg.iterable;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.MessageFormat;
+import com.github.dgroup.velocity.Arg;
 import org.cactoos.Scalar;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
- * The path to the resource.
+ * Envelope for {@link Arg}.
  *
- * @since 0.1.0
+ * @param <V> The type of value.
+ * @since 0.2.0
  */
-public final class PathOf implements Scalar<Path> {
+public class ArgsEnvelope<V> implements Arg<Iterable<V>> {
 
     /**
-     * The path.
+     * The Apache Velocity variable name, specified in template file.
      */
-    private final Scalar<Path> src;
+    private final String key;
 
     /**
-     * Ctor.
-     * @param pattern The path pattern for {@link MessageFormat#format}.
-     *  The default delimiter is OS depended path separator.
+     * The Apache Velocity variable value, specified in template file.
      */
-    public PathOf(final String pattern) {
-        this(pattern, File.separator);
-    }
+    private final UncheckedScalar<Iterable<V>> val;
 
     /**
      * Ctor.
-     * @param pattern The pattern for {@link MessageFormat#format}.
-     * @param args The arguments for {@link MessageFormat#format}.
+     * @param key The variable name specified in template file.
+     * @param val The variable value specified in template file.
      */
-    public PathOf(final String pattern, final Object args) {
-        this(() -> Paths.get(MessageFormat.format(pattern, args)));
-    }
-
-    /**
-     * Ctor.
-     * @param src The path to resource.
-     */
-    public PathOf(final Scalar<Path> src) {
-        this.src = src;
+    public ArgsEnvelope(final String key, final Scalar<Iterable<V>> val) {
+        this.key = key;
+        this.val = new UncheckedScalar<>(val);
     }
 
     @Override
-    public Path value() throws Exception {
-        return this.src.value();
+    public final String name() {
+        return this.key;
     }
 
     @Override
-    public String toString() {
-        return new UncheckedScalar<>(this)
-            .value()
-            .toAbsolutePath()
-            .toString();
+    public final Iterable<V> value() {
+        return this.val.value();
     }
 }

@@ -21,28 +21,10 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity;
 
 /**
- * The resource variable.
+ * Unit tests for the package {@link com.github.dgroup.velocity.arg.iterable}.
  *
- * The variable, which will be replaced in the velocity template.
- *
- * @param <V> Type of item.
  * @since 0.1.0
  */
-public interface Variable<V> {
-
-    /**
-     * Label of variable in Apache Velocity template.
-     * @return The label.
-     */
-    String name();
-
-    /**
-     * Value of variable in Apache Velocity template.
-     * @return The value.
-     */
-    V value();
-
-}
+package com.github.dgroup.velocity.arg.iterable;

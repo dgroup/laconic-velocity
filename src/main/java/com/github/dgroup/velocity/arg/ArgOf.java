@@ -22,38 +22,26 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.github.dgroup.velocity.path;
+package com.github.dgroup.velocity.arg;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import org.apache.velocity.VelocityContext;
 
 /**
- * Unit tests for class {@link PathOf}.
+ * The resource variable.
+ *
+ * The variable, which will be replaced in the velocity template.
+ * Immutable single argument for {@link VelocityContext}.
  *
  * @since 0.1.0
- * @checkstyle JavadocMethodCheck (500 lines)
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class PathOfTest {
+public final class ArgOf extends ArgEnvelope<Object> {
 
-    @Test
-    public void value() throws Exception {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .value()
-                .toFile()
-                .getName(),
-            Matchers.equalTo("rspath.txt")
-        );
-    }
-
-    @Test
-    public void asString() {
-        MatcherAssert.assertThat(
-            new PathOf("src{0}test{0}resources{0}velocity{0}rspath.txt")
-                .toString(),
-            Matchers.endsWith("rspath.txt")
-        );
+    /**
+     * Ctor.
+     * @param key The variable name specified in template file.
+     * @param value The variable value specified in template file.
+     */
+    public ArgOf(final String key, final Object value) {
+        super(key, () -> value);
     }
 }
