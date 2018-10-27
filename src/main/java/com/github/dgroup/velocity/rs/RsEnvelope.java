@@ -25,6 +25,7 @@ package com.github.dgroup.velocity.rs;
 
 import com.github.dgroup.velocity.Arg;
 import com.github.dgroup.velocity.Resource;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import org.apache.velocity.Template;
@@ -53,19 +54,20 @@ public class RsEnvelope implements Resource<String> {
 
     /**
      * Ctor.
-     * @param src The Velocity template as {@link org.cactoos.Input}.
      * @param tname The name of Velocity template.
+     * @param src The Velocity template as {@link org.cactoos.Input}.
+     *  The input stream will be closed automatically by {@link RsEnvelope}.
      */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public RsEnvelope(final Scalar<String> tname, final Scalar<Input> src) {
         this(
             ctx -> {
                 // @checkstyle IllegalCatchCheck (20 lines)
-                try {
+                try (InputStream inp = src.value().stream()) {
                     final RuntimeServices rsrv = RuntimeSingleton
                         .getRuntimeServices();
                     final StringReader srdr = new StringReader(
-                        new TextOf(src.value()).asString()
+                        new TextOf(inp).asString()
                     );
                     final Template template = new Template();
                     template.setRuntimeServices(rsrv);
