@@ -32,6 +32,8 @@ import org.cactoos.io.InputOf;
  * Velocity resource from the classpath.
  *
  * @since 0.2.0
+ * @todo #/DEV:30min Add constructor RsClasspath(String) with relative path.
+ *  Ensure that getResourceAsStream works on WinOs with '/' symbol.
  */
 public final class RsClasspath extends RsEnvelope {
 

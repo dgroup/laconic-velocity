@@ -52,7 +52,7 @@ public final class RsTextTest {
     public void transformHtml() throws RsException {
         MatcherAssert.assertThat(
             new RsText(
-                "html.vm", new PathOf("src{0}test{0}resources")
+                "html.vm", new PathOf("src{0}test{0}resources{0}velocity")
             ).compose(
                 new ArgOf(
                     "users", new ListOf<>("Tom", "Bob", "Hank")
@@ -73,7 +73,7 @@ public final class RsTextTest {
         MatcherAssert.assertThat(
             new RsText(
                 "query.sql",
-                new PathOf("src{0}test{0}resources")
+                new PathOf("src{0}test{0}resources{0}velocity")
             ).compose(
                 new ArgOf("flag", true)
             ),
@@ -107,30 +107,14 @@ public final class RsTextTest {
     }
 
     @Test
-    public void classpath() throws Exception {
+    public void hierarchical() throws RsException {
         MatcherAssert.assertThat(
-            new RsText(
-                "classpath.md",
-                new PathOf("src{0}main{0}resources")
-                    .value()
-                    .toFile()
-                    .getAbsolutePath()
-            ).compose(
-                new ArgOf(
-                    "systems",
-                    new ListOf<>(
-                        new MapEntry<>("Windows", 10),
-                        new MapEntry<>("Linux", 16),
-                        new MapEntry<>("Mac OS", 12)
-                    )
-                )
-            ),
+            new RsText("query.sql", "src/test/resources")
+                .compose(
+                    new ArgOf("flag", true)
+                ),
             Matchers.equalTo(
-                "| OS | Version |\n"
-                    + "|---|---|\n"
-                    + "| Windows | 10 |\n"
-                    + "| Linux | 16 |\n"
-                    + "| Mac OS | 12 |\n"
+                "select 1 from dual\nunion\nselect 2 from dual\n"
             )
         );
     }

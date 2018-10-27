@@ -59,6 +59,9 @@ public final class RsText extends RsEnvelope {
      * Ctor.
      * @param tname The name of the Velocity template from the classpath.
      * @param roots The root classpath nodes for hierarchical search.
+     * @todo #/DEV:30min Restrict hierarchical search by cardinality=1.
+     *  In current implementation all resources which found will be composed to
+     *  single resource. We should find only the 1st resource.
      */
     @SafeVarargs
     public RsText(final String tname, final Scalar<Path>... roots) {

@@ -41,6 +41,8 @@ import org.cactoos.text.TextOf;
  * The envelope for {@link Resource}.
  *
  * @since 0.1.0
+ * @todo #/DEV:30min Add RsJoined child which allows to join multiple templates
+ *  in singe resource and compose them.
  */
 public class RsEnvelope implements Resource<String> {
 
