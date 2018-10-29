@@ -23,45 +23,45 @@
  */
 package com.github.dgroup.velocity;
 
-import com.github.dgroup.velocity.rs.RsException;
+import com.github.dgroup.velocity.template.TemplateException;
 import org.apache.velocity.VelocityContext;
 import org.cactoos.Scalar;
 
 /**
- * Velocity resource for text generation (HTML,SQL,XML,etc).
+ * Velocity template for text generation (HTML,SQL,XML,etc).
  *
  * Reed more about Apache Velocity at
  *  http://velocity.apache.org/engine/1.7/user-guide.html.
  *
- * @param <T> Type of resource.
+ * @param <T> Type of template.
  * @since 0.1.0
  */
-public interface Resource<T> {
+public interface Template<T> {
 
     /**
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      * @param args The velocity variables for template.
      * @return Text, XML, JSON, SQL, HTML, etc
-     * @throws RsException in case template format error.
+     * @throws TemplateException in case template format error.
      */
-    T compose(Arg... args) throws RsException;
+    T compose(Arg... args) throws TemplateException;
 
     /**
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      *
      * @param args The velocity variables for template.
      * @return Text, XML, JSON, SQL, HTML, etc
-     * @throws RsException in case template format error.
+     * @throws TemplateException in case template format error.
      */
-    T compose(Iterable<Arg> args) throws RsException;
+    T compose(Iterable<Arg> args) throws TemplateException;
 
     /**
      * Transform the velocity template to HTML/SQL/etc using velocity variables.
      *
      * @param ctx The velocity context with variables.
      * @return Text, XML, JSON, SQL, HTML, etc
-     * @throws RsException in case template format error.
+     * @throws TemplateException in case template format error.
      */
-    T compose(Scalar<VelocityContext> ctx) throws RsException;
+    T compose(Scalar<VelocityContext> ctx) throws TemplateException;
 
 }

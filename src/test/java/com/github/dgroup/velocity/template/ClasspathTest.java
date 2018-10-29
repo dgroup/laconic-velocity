@@ -21,25 +21,40 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity;
 
-import com.github.dgroup.velocity.rs.RsException;
+package com.github.dgroup.velocity.template;
+
+import com.github.dgroup.velocity.arg.ArgOf;
+import com.github.dgroup.velocity.path.RelativePath;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
- * Repository of velocity resources.
+ * Unit tests for class {@link Classpath}.
  *
- * @param <T> The type of resource.
- * @since 0.2.0
+ * @since 0.2
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-public interface Resources<T> {
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class ClasspathTest {
 
-    /**
-     * Find the velocity resource by filename in repository.
-     *
-     * @param fname The file name of velocity resource
-     * @return The resource.
-     * @throws RsException in case if resource not found.
-     */
-    Resource<T> find(String fname) throws RsException;
+    @Test
+    public void classpath() throws Exception {
+        MatcherAssert.assertThat(
+            new Classpath(
+                new RelativePath("velocity{0}cls-loader.md")
+            ).compose(
+                new ArgOf("way", "getResourceAsStream")
+            ),
+            Matchers.equalTo(
+                "I'm going to use `getResourceAsStream` here."
+            )
+        );
+    }
 
+    @Test(expected = TemplateException.class)
+    public void resourceIsNull() throws TemplateException {
+        new Classpath(() -> null).compose();
+    }
 }

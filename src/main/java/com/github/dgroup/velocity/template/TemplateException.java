@@ -21,38 +21,30 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
-package com.github.dgroup.velocity.rs;
-
-import com.github.dgroup.velocity.arg.ArgOf;
-import com.github.dgroup.velocity.path.PathOf;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+package com.github.dgroup.velocity.template;
 
 /**
- * Unit tests for class {@link ResourcesOf}.
+ * For exceptions occurred during transformation of Apache Velocity templates.
  *
- * @since 0.2.0
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @since 0.1.0
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class ResourcesOfTest {
+public final class TemplateException extends Exception {
 
-    @Test
-    public void find() throws RsException {
-        MatcherAssert.assertThat(
-            new ResourcesOf(
-                "template",
-                new RsText(
-                    "find.md", new PathOf("src{0}test{0}resources")
-                )
-            )
-                .find("template")
-                .compose(
-                    new ArgOf("way", "find")
-                ),
-            Matchers.equalTo("The file was detected using `find`.")
-        );
+    /**
+     * Ctor.
+     * @param cause The root cause.
+     */
+    public TemplateException(final Exception cause) {
+        super(cause);
     }
+
+    /**
+     * Ctor.
+     * @param msg The exception message.
+     * @param cause The root cause.
+     */
+    public TemplateException(final String msg, final Exception cause) {
+        super(msg, cause);
+    }
+
 }

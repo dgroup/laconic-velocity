@@ -21,9 +21,9 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.rs;
+package com.github.dgroup.velocity.template;
 
-import com.github.dgroup.velocity.Resource;
+import com.github.dgroup.velocity.Template;
 import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.map.MapEntry;
@@ -31,50 +31,50 @@ import org.cactoos.map.MapOf;
 import org.cactoos.map.StickyMap;
 
 /**
- * The storage for textual velocity resources.
+ * The storage for textual velocity templates.
  *
  * @since 0.2.0
  */
-public final class ResourcesOf extends ResourcesEnvelope<String> {
+public final class TemplatesOf extends TemplatesEnvelope<String> {
 
     /**
-     * Detect the velocity resources in the classpath.
+     * Detect the velocity templates in the classpath.
      */
-    public ResourcesOf() {
-        this(RsClasspath::new);
+    public TemplatesOf() {
+        this(Classpath::new);
     }
 
     /**
      * Ctor.
-     * @param name The name of velocity resource.
-     * @param rsrc The velocity resource.
+     * @param name The name of velocity template.
+     * @param rsrc The velocity template.
      */
-    public ResourcesOf(final String name, final Resource<String> rsrc) {
+    public TemplatesOf(final String name, final Template<String> rsrc) {
         this(new MapEntry<>(name, rsrc));
     }
 
     /**
      * Ctor.
-     * @param rsrcs The velocity resources, where key is filename.
+     * @param rsrcs The velocity templates, where key is filename.
      */
     @SafeVarargs
-    public ResourcesOf(final MapEntry<String, Resource<String>>... rsrcs) {
+    public TemplatesOf(final MapEntry<String, Template<String>>... rsrcs) {
         this(new StickyMap<>(new MapOf<>(rsrcs)));
     }
 
     /**
      * Ctor.
-     * @param rsrcs The velocity resources, where key is filename.
+     * @param rsrcs The velocity templates, where key is filename.
      */
-    public ResourcesOf(final Map<String, Resource<String>> rsrcs) {
+    public TemplatesOf(final Map<String, Template<String>> rsrcs) {
         this(rsrcs::get);
     }
 
     /**
      * Ctor.
-     * @param fnc The function to evaluate the velocity resource by filename.
+     * @param fnc The function to evaluate the velocity template by filename.
      */
-    public ResourcesOf(final Func<String, Resource<String>> fnc) {
+    public TemplatesOf(final Func<String, Template<String>> fnc) {
         super(fnc);
     }
 

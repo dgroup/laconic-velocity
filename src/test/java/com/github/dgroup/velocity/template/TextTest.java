@@ -21,7 +21,7 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.rs;
+package com.github.dgroup.velocity.template;
 
 import com.github.dgroup.velocity.arg.ArgOf;
 import com.github.dgroup.velocity.path.PathOf;
@@ -32,7 +32,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Unit tests for class {@link RsText}.
+ * Unit tests for class {@link Text}.
  *
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle OperatorWrapCheck (500 lines)
@@ -46,12 +46,12 @@ import org.junit.Test;
     "PMD.AvoidDuplicateLiterals",
     "PMD.StaticAccessToStaticFields"
 })
-public final class RsTextTest {
+public final class TextTest {
 
     @Test
-    public void transformHtml() throws RsException {
+    public void transformHtml() throws TemplateException {
         MatcherAssert.assertThat(
-            new RsText(
+            new Text(
                 "html.vm", new PathOf("src{0}test{0}resources{0}velocity")
             ).compose(
                 new ArgOf(
@@ -69,9 +69,9 @@ public final class RsTextTest {
     }
 
     @Test
-    public void transformSql() throws RsException {
+    public void transformSql() throws TemplateException {
         MatcherAssert.assertThat(
-            new RsText(
+            new Text(
                 "query.sql",
                 new PathOf("src{0}test{0}resources{0}velocity")
             ).compose(
@@ -82,9 +82,9 @@ public final class RsTextTest {
     }
 
     @Test
-    public void transformMarkdown() throws RsException {
+    public void transformMarkdown() throws TemplateException {
         MatcherAssert.assertThat(
-            new RsText(
+            new Text(
                 "markdown.md", new PathOf("src{0}test{0}resources{0}velocity")
             ).compose(
                 new ArgOf(
@@ -107,9 +107,9 @@ public final class RsTextTest {
     }
 
     @Test
-    public void hierarchical() throws RsException {
+    public void hierarchical() throws TemplateException {
         MatcherAssert.assertThat(
-            new RsText("query.sql", "src/test/resources")
+            new Text("query.sql", "src/test/resources")
                 .compose(
                     new ArgOf("flag", true)
                 ),
@@ -119,13 +119,13 @@ public final class RsTextTest {
         );
     }
 
-    @Test(expected = RsException.class)
-    public void templateIsNull() throws RsException {
-        new RsText(null, "").compose();
+    @Test(expected = TemplateException.class)
+    public void templateIsNull() throws TemplateException {
+        new Text(null, "").compose();
     }
 
-    @Test(expected = RsException.class)
-    public void rootDirectoryIsNull() throws RsException {
-        new RsText("no-root.txt").compose();
+    @Test(expected = TemplateException.class)
+    public void rootDirectoryIsNull() throws TemplateException {
+        new Text("no-root.txt").compose();
     }
 }

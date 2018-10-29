@@ -21,14 +21,13 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.rs;
+package com.github.dgroup.velocity.template;
 
 import com.github.dgroup.velocity.Arg;
-import com.github.dgroup.velocity.Resource;
+import com.github.dgroup.velocity.Template;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
-import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.RuntimeSingleton;
@@ -39,13 +38,13 @@ import org.cactoos.list.ListOf;
 import org.cactoos.text.TextOf;
 
 /**
- * The envelope for {@link Resource}.
+ * The envelope for {@link Template}.
  *
  * @since 0.1.0
  * @todo #/DEV:30min Add RsJoined child which allows to join multiple templates
  *  in singe resource and compose them.
  */
-public class RsEnvelope implements Resource<String> {
+public class TemplateEnvelope implements Template<String> {
 
     /**
      * The func to evaluate the entity.
@@ -56,10 +55,13 @@ public class RsEnvelope implements Resource<String> {
      * Ctor.
      * @param tname The name of Velocity template.
      * @param src The Velocity template as {@link org.cactoos.Input}.
-     *  The input stream will be closed automatically by {@link RsEnvelope}.
+     *  The input stream will be closed automatically by
+     *  {@link TemplateEnvelope}.
      */
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public RsEnvelope(final Scalar<String> tname, final Scalar<Input> src) {
+    public TemplateEnvelope(
+        final Scalar<String> tname, final Scalar<Input> src
+    ) {
         this(
             ctx -> {
                 // @checkstyle IllegalCatchCheck (20 lines)
@@ -69,7 +71,8 @@ public class RsEnvelope implements Resource<String> {
                     final StringReader srdr = new StringReader(
                         new TextOf(inp).asString()
                     );
-                    final Template template = new Template();
+                    final org.apache.velocity.Template template =
+                        new org.apache.velocity.Template();
                     template.setRuntimeServices(rsrv);
                     template.setData(rsrv.parse(srdr, tname.value()));
                     template.initDocument();
@@ -77,7 +80,7 @@ public class RsEnvelope implements Resource<String> {
                     template.merge(ctx, writer);
                     return writer.toString();
                 } catch (final Exception cause) {
-                    throw new RsException(cause);
+                    throw new TemplateException(cause);
                 }
             }
         );
@@ -87,18 +90,18 @@ public class RsEnvelope implements Resource<String> {
      * Ctor.
      * @param fnc The function to map the {@link VelocityContext} to entity.
      */
-    public RsEnvelope(final Func<VelocityContext, String> fnc) {
+    public TemplateEnvelope(final Func<VelocityContext, String> fnc) {
         this.fnc = fnc;
     }
 
     @Override
-    public final String compose(final Arg... args) throws RsException {
+    public final String compose(final Arg... args) throws TemplateException {
         return this.compose(new ListOf<>(args));
     }
 
     @Override
     public final String compose(final Iterable<Arg> args)
-        throws RsException {
+        throws TemplateException {
         return this.compose(
             () -> {
                 final VelocityContext ctx = new VelocityContext();
@@ -114,11 +117,11 @@ public class RsEnvelope implements Resource<String> {
     @SuppressWarnings("PMD.AvoidCatchingGenericException")
     public final String compose(final Scalar<VelocityContext> ctx)
         // @checkstyle IllegalCatchCheck (5 lines)
-        throws RsException {
+        throws TemplateException {
         try {
             return this.fnc.apply(ctx.value());
         } catch (final Exception cause) {
-            throw new RsException(cause);
+            throw new TemplateException(cause);
         }
     }
 

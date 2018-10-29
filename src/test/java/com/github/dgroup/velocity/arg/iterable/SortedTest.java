@@ -26,8 +26,8 @@ package com.github.dgroup.velocity.arg.iterable;
 
 import com.github.dgroup.velocity.arg.ArgOf;
 import com.github.dgroup.velocity.path.PathOf;
-import com.github.dgroup.velocity.rs.RsException;
-import com.github.dgroup.velocity.rs.RsText;
+import com.github.dgroup.velocity.template.TemplateException;
+import com.github.dgroup.velocity.template.Text;
 import java.util.Comparator;
 import org.cactoos.iterable.Mapped;
 import org.hamcrest.MatcherAssert;
@@ -61,9 +61,9 @@ public final class SortedTest {
     }
 
     @Test
-    public void reverseSort() throws RsException {
+    public void reverseSort() throws TemplateException {
         MatcherAssert.assertThat(
-            new RsText(
+            new Text(
                 "sorted.md", new PathOf("src{0}test{0}resources{0}velocity")
             ).compose(
                 new ArgOf("header", "Reverse ordered OS"),

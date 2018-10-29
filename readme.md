@@ -36,7 +36,7 @@ dependencies {
 }
 ```
 ## Get started
-**Generate the text/sql/xml/markdown/json/etc based on velocity [resource](/src/main/java/com/github/dgroup/velocity/Resource.java).**
+**Generate the text/sql/xml/markdown/json/etc based on velocity [template](/src/main/java/com/github/dgroup/velocity/Template.java).**
  1. Define velocity template `query.sql`
     ```sql
     select 1 from dual
@@ -65,12 +65,12 @@ dependencies {
 
     ```
  2. Define instance of velocity template using
-    - full path to resource
+    - full path to template
       ```java
       @Test
-      public void transformSql() throws RsException {
+      public void transformSql() throws TemplateException {
           MatcherAssert.assertThat(
-              new RsText("query.sql", "src/test/resources/velocity")
+              new Text("query.sql", "src/test/resources/velocity")
                   .compose(
                       new ArgOf("flag", true)
                    ),
@@ -80,13 +80,13 @@ dependencies {
           );
       }
       ```
-      See [more](/src/test/java/com/github/dgroup/velocity/rs/RsTextTest.java).
+      See [more](/src/test/java/com/github/dgroup/velocity/template/TextTest.java).
     - hierarchical search
       ```java
       @Test
-      public void hierarchical() throws RsException {
+      public void hierarchical() throws TemplateException {
           MatcherAssert.assertThat(
-              new RsText("query.sql", "src/test/resources"))
+              new Text("query.sql", "src/test/resources"))
                   .compose(
                       new ArgOf("flag", true)
                   ),
@@ -96,13 +96,13 @@ dependencies {
           );
       }
       ```
-      You can also specify the multiple roots ([more](/src/main/java/com/github/dgroup/velocity/rs/RsText.java#L64)).
-    - classpath resource
+      You can also specify the multiple roots ([more](/src/main/java/com/github/dgroup/velocity/template/Text.java#L64)).
+    - classpath template
       ```java
       @Test
-      public void classpath() throws RsException {
+      public void classpath() throws TemplateException {
           MatcherAssert.assertThat(
-              new RsClasspath(new RelativePath("velocity{0}query.sql"))
+              new Classpath(new RelativePath("velocity{0}query.sql"))
                   .compose(
                       new ArgOf("flag", true)
                   ),
@@ -112,4 +112,4 @@ dependencies {
           );
       }
       ```
-      See [more](/src/test/java/com/github/dgroup/velocity/rs/RsClasspathTest.java).
+      See [more](/src/test/java/com/github/dgroup/velocity/template/ClasspathTest.java).

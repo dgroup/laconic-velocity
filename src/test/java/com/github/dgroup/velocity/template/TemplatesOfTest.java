@@ -21,7 +21,38 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
+package com.github.dgroup.velocity.template;
+
+import com.github.dgroup.velocity.arg.ArgOf;
+import com.github.dgroup.velocity.path.PathOf;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 /**
- * Resources.
+ * Unit tests for class {@link TemplatesOf}.
+ *
+ * @since 0.2.0
+ * @checkstyle JavadocMethodCheck (500 lines)
  */
-package com.github.dgroup.velocity.rs;
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
+public final class TemplatesOfTest {
+
+    @Test
+    public void find() throws TemplateException {
+        MatcherAssert.assertThat(
+            new TemplatesOf(
+                "template",
+                new Text(
+                    "find.md", new PathOf("src{0}test{0}resources")
+                )
+            )
+                .find("template")
+                .compose(
+                    new ArgOf("way", "find")
+                ),
+            Matchers.equalTo("The file was detected using `find`.")
+        );
+    }
+}

@@ -21,30 +21,44 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.rs;
+package com.github.dgroup.velocity.template;
+
+import com.github.dgroup.velocity.Template;
+import com.github.dgroup.velocity.Templates;
+import org.cactoos.Func;
+import org.cactoos.func.StickyFunc;
 
 /**
- * For exceptions occurred during transformation of Apache Velocity templates.
+ * The envelope for {@link Templates}.
  *
- * @since 0.1.0
+ * @param <T> The type of template.
+ *
+ * @since 0.2.0
  */
-public final class RsException extends Exception {
+public class TemplatesEnvelope<T> implements Templates<T> {
+
+    /**
+     * The function to evaluate the velocity template by filename.
+     */
+    private final Func<String, Template<T>> fnc;
 
     /**
      * Ctor.
-     * @param cause The root cause.
+     * @param fnc The function to evaluate the velocity template by filename.
      */
-    public RsException(final Exception cause) {
-        super(cause);
+    public TemplatesEnvelope(final Func<String, Template<T>> fnc) {
+        this.fnc = new StickyFunc<>(fnc);
     }
 
-    /**
-     * Ctor.
-     * @param msg The exception message.
-     * @param cause The root cause.
-     */
-    public RsException(final String msg, final Exception cause) {
-        super(msg, cause);
+    @Override
+    @SuppressWarnings("PMD.AvoidCatchingGenericException")
+    public final Template<T> find(final String fname) throws TemplateException {
+        // @checkstyle IllegalCatchCheck (5 lines)
+        try {
+            return this.fnc.apply(fname);
+        } catch (final Exception cause) {
+            throw new TemplateException(cause);
+        }
     }
 
 }

@@ -22,7 +22,7 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.github.dgroup.velocity.rs;
+package com.github.dgroup.velocity.template;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -44,14 +44,14 @@ import org.cactoos.iterable.Mapped;
  * @since 0.1.0
  * @checkstyle ClassDataAbstractionCouplingCheck (200 lines)
  */
-public final class RsText extends RsEnvelope {
+public final class Text extends TemplateEnvelope {
 
     /**
      * Ctor.
      * @param tname The name of the Velocity template.
      * @param dir The directory where Velocity template is placed/located.
      */
-    public RsText(final String tname, final String dir) {
+    public Text(final String tname, final String dir) {
         this(tname, () -> Paths.get(dir));
     }
 
@@ -63,7 +63,7 @@ public final class RsText extends RsEnvelope {
      *  the first one will be used.
      */
     @SafeVarargs
-    public RsText(final String tname, final Scalar<Path>... roots) {
+    public Text(final String tname, final Scalar<Path>... roots) {
         super(
             () -> tname,
             () -> {
