@@ -23,11 +23,11 @@
  */
 package com.github.dgroup.velocity.path;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import org.cactoos.Scalar;
+import org.cactoos.Text;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -45,10 +45,10 @@ public final class PathOf implements Scalar<Path> {
     /**
      * Ctor.
      * @param pattern The path pattern for {@link MessageFormat#format}.
-     *  The default delimiter is OS depended path separator.
+     *  The default delimiter is `/` path separator.
      */
     public PathOf(final String pattern) {
-        this(pattern, File.separator);
+        this(pattern, '/');
     }
 
     /**
@@ -57,7 +57,15 @@ public final class PathOf implements Scalar<Path> {
      * @param args The arguments for {@link MessageFormat#format}.
      */
     public PathOf(final String pattern, final Object args) {
-        this(() -> Paths.get(MessageFormat.format(pattern, args)));
+        this(() -> MessageFormat.format(pattern, args));
+    }
+
+    /**
+     * Ctor.
+     * @param path The path to resource.
+     */
+    public PathOf(final Text path) {
+        this(() -> Paths.get(path.asString()));
     }
 
     /**

@@ -23,11 +23,11 @@
  */
 package com.github.dgroup.velocity.path;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.MessageFormat;
 import org.cactoos.Scalar;
+import org.cactoos.Text;
 import org.cactoos.scalar.UncheckedScalar;
 
 /**
@@ -47,10 +47,10 @@ public final class RelativePath implements Scalar<String> {
     /**
      * Ctor.
      * @param pattern The path pattern for {@link MessageFormat#format}.
-     *  The default delimiter is OS depended path separator.
+     *  The default delimiter is '/' path separator.
      */
     public RelativePath(final String pattern) {
-        this(pattern, File.separator);
+        this(pattern, '/');
     }
 
     /**
@@ -59,7 +59,15 @@ public final class RelativePath implements Scalar<String> {
      * @param args The arguments for {@link MessageFormat#format}.
      */
     public RelativePath(final String pattern, final Object... args) {
-        this(() -> MessageFormat.format(pattern, args));
+        this((Scalar<String>) () -> MessageFormat.format(pattern, args));
+    }
+
+    /**
+     * Ctor.
+     * @param path The path to resource.
+     */
+    public RelativePath(final Text path) {
+        this((Scalar<String>) path::asString);
     }
 
     /**
