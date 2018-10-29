@@ -23,8 +23,8 @@
  */
 
 /**
- * Unit tests for the package {@link com.github.dgroup.velocity.rs}.
+ * Unit tests for the package {@link com.github.dgroup.velocity.template}.
  *
  * @since 0.1.0
  */
-package com.github.dgroup.velocity.rs;
+package com.github.dgroup.velocity.template;

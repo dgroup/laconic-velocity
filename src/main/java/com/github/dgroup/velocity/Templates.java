@@ -21,47 +21,25 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.rs;
+package com.github.dgroup.velocity;
 
-import com.github.dgroup.velocity.Arg;
-import com.github.dgroup.velocity.Resource;
-import org.apache.velocity.VelocityContext;
-import org.cactoos.Scalar;
+import com.github.dgroup.velocity.template.TemplateException;
 
 /**
- * Fake implementation for unit testing purposes.
+ * Repository of velocity templates.
  *
- * @param <T> Type of fake resource.
- * @since 0.1.0
+ * @param <T> The type of resource.
+ * @since 0.2.0
  */
-public final class RsFake<T> implements Resource<T> {
+public interface Templates<T> {
 
     /**
-     * The fake resource.
+     * Find the velocity template by filename in repository.
+     *
+     * @param fname The file name of velocity template
+     * @return The resource.
+     * @throws TemplateException in case if resource not found.
      */
-    private final T val;
-
-    /**
-     * Ctor.
-     * @param val The fake resource.
-     */
-    public RsFake(final T val) {
-        this.val = val;
-    }
-
-    @Override
-    public T compose(final Arg... args) {
-        return this.val;
-    }
-
-    @Override
-    public T compose(final Iterable<Arg> args) {
-        return this.val;
-    }
-
-    @Override
-    public T compose(final Scalar<VelocityContext> ctx) {
-        return this.val;
-    }
+    Template<T> find(String fname) throws TemplateException;
 
 }

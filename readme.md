@@ -1,4 +1,3 @@
-## Laconic API for Apache Velocity
 [![Maven](https://img.shields.io/maven-central/v/com.github.dgroup/velocity.svg)](https://mvnrepository.com/artifact/com.github.dgroup/velocity)
 [![Javadocs](http://www.javadoc.io/badge/com.github.dgroup/velocity.svg)](http://www.javadoc.io/doc/com.github.dgroup/velocity)
 [![License: MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](./license.txt) 
@@ -19,16 +18,26 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/011685357fc44898a8538d3e51d8da70)](https://www.codacy.com/app/dgroup/velocity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/velocity&amp;utm_campaign=Badge_Grade)
 [![Codecov](https://codecov.io/gh/dgroup/velocity/branch/master/graph/badge.svg?token=Pqdeao3teI)](https://codecov.io/gh/dgroup/velocity)
 
- 1. Add mvn dependency
-    ```xml
-    <dependency>
-        <groupId>com.github.dgroup</groupId>
-        <artifactId>velocity</artifactId>
-        <version>0.1.0</version>
-    </dependency>
-    ```
+**ATTENTION**: We're still in a very early alpha version, the API
+may and _will_ change frequently. Please, use it at your own risk,
+until we release version 1.0.
 
- 2. Define velocity template `query.sql`
+Maven:
+```xml
+<dependency>
+    <groupId>com.github.dgroup</groupId>
+    <artifactId>velocity</artifactId>
+</dependency>
+```
+Gradle:
+```groovy
+dependencies {
+    compile 'com.github.dgroup:velocity:<version>'
+}
+```
+## Get started
+**Generate the text/sql/xml/markdown/json/etc based on velocity [template](/src/main/java/com/github/dgroup/velocity/Template.java).**
+ 1. Define velocity template `query.sql`
     ```sql
     select 1 from dual
     #if ($flag)
@@ -36,65 +45,71 @@
     select 2 from dual
     #end
     ```
-
- 3. Define instance of velocity template
-    ```java
-    @Test
-    public void transformSql() throws RsException {
-        MatcherAssert.assertThat(
-            new RsText(
-                "query.sql",
-                new PathOf("src{0}test{0}resources")
-            ).compose(
-                new ArgOf("flag", true)
-            ),
-            Matchers.equalTo("select 1 from dual\nunion\nselect 2 from dual\n")
-        );
-    }
+    in
     ```
-    where [RsText](/src/main/java/com/github/dgroup/velocity/rs/RsText.java) represents Apache Velocity resource
-    ```java
-    package com.github.dgroup.velocity;
-
-    import ...
-
-    /**
-     * Velocity resource for text generation (HTML,SQL,XML,etc).
-     *
-     * Reed more about Apache Velocity at
-     *  http://velocity.apache.org/engine/1.7/user-guide.html.
-     *
-     * @param <T> Type of resource.
-     * @since 0.1.0
-     */
-    public interface Resource<T> {
-
-        /**
-         * Transform the velocity template to HTML/SQL/etc using velocity variables.
-         * @param args The velocity variables for template.
-         * @return Text, XML, JSON, SQL, HTML, etc
-         * @throws RsException in case template format error.
-         */
-        T compose(Arg... args) throws RsException;
-
-        /**
-         * Transform the velocity template to HTML/SQL/etc using velocity variables.
-         *
-         * @param args The velocity variables for template.
-         * @return Text, XML, JSON, SQL, HTML, etc
-         * @throws RsException in case template format error.
-         */
-        T compose(Iterable<Arg> args) throws RsException;
-
-        /**
-         * Transform the velocity template to HTML/SQL/etc using velocity variables.
-         *
-         * @param ctx The velocity context with variables.
-         * @return Text, XML, JSON, SQL, HTML, etc
-         * @throws RsException in case template format error.
-         */
-        T compose(Scalar<VelocityContext> ctx) throws RsException;
-
-    }
+    velocity $ tree
+    ...
+    |-- src
+    |   |-- main
+    |   |   |-- ...
+    |   |
+    |   `-- test
+    |       |-- java
+    |       |   `-- ...
+    |       `-- resources
+    |           `-- velocity
+    |               |-- ...
+    |               |-- query.sql
+    |               |-- ...
+    ...
 
     ```
+ 2. Define instance of velocity template using
+    - full path to template
+      ```java
+      @Test
+      public void transformSql() throws TemplateException {
+          MatcherAssert.assertThat(
+              new Text("query.sql", "src/test/resources/velocity")
+                  .compose(
+                      new ArgOf("flag", true)
+                   ),
+              Matchers.equalTo(
+                  "select 1 from dual\nunion\nselect 2 from dual\n"
+              )
+          );
+      }
+      ```
+      See [more](/src/test/java/com/github/dgroup/velocity/template/TextTest.java).
+    - hierarchical search
+      ```java
+      @Test
+      public void hierarchical() throws TemplateException {
+          MatcherAssert.assertThat(
+              new Text("query.sql", "src/test/resources"))
+                  .compose(
+                      new ArgOf("flag", true)
+                  ),
+              Matchers.equalTo(
+                  "select 1 from dual\nunion\nselect 2 from dual\n"
+              )
+          );
+      }
+      ```
+      You can also specify the multiple roots ([more](/src/main/java/com/github/dgroup/velocity/template/Text.java#L64)).
+    - classpath template
+      ```java
+      @Test
+      public void classpath() throws TemplateException {
+          MatcherAssert.assertThat(
+              new Classpath(new RelativePath("velocity{0}query.sql"))
+                  .compose(
+                      new ArgOf("flag", true)
+                  ),
+              Matchers.equalTo(
+                  "select 1 from dual\nunion\nselect 2 from dual\n"
+              )
+          );
+      }
+      ```
+      See [more](/src/test/java/com/github/dgroup/velocity/template/ClasspathTest.java).

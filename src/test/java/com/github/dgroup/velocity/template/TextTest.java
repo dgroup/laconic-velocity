@@ -21,7 +21,7 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.rs;
+package com.github.dgroup.velocity.template;
 
 import com.github.dgroup.velocity.arg.ArgOf;
 import com.github.dgroup.velocity.path.PathOf;
@@ -32,7 +32,7 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 
 /**
- * Unit tests for class {@link RsText}.
+ * Unit tests for class {@link Text}.
  *
  * @checkstyle MagicNumberCheck (500 lines)
  * @checkstyle OperatorWrapCheck (500 lines)
@@ -46,13 +46,13 @@ import org.junit.Test;
     "PMD.AvoidDuplicateLiterals",
     "PMD.StaticAccessToStaticFields"
 })
-public final class RsTextTest {
+public final class TextTest {
 
     @Test
-    public void transformHtml() throws RsException {
+    public void transformHtml() throws TemplateException {
         MatcherAssert.assertThat(
-            new RsText(
-                "html.vm", new PathOf("src{0}test{0}resources")
+            new Text(
+                "html.vm", new PathOf("src{0}test{0}resources{0}velocity")
             ).compose(
                 new ArgOf(
                     "users", new ListOf<>("Tom", "Bob", "Hank")
@@ -69,11 +69,11 @@ public final class RsTextTest {
     }
 
     @Test
-    public void transformSql() throws RsException {
+    public void transformSql() throws TemplateException {
         MatcherAssert.assertThat(
-            new RsText(
+            new Text(
                 "query.sql",
-                new PathOf("src{0}test{0}resources")
+                new PathOf("src{0}test{0}resources{0}velocity")
             ).compose(
                 new ArgOf("flag", true)
             ),
@@ -82,9 +82,9 @@ public final class RsTextTest {
     }
 
     @Test
-    public void transformMarkdown() throws RsException {
+    public void transformMarkdown() throws TemplateException {
         MatcherAssert.assertThat(
-            new RsText(
+            new Text(
                 "markdown.md", new PathOf("src{0}test{0}resources{0}velocity")
             ).compose(
                 new ArgOf(
@@ -107,41 +107,25 @@ public final class RsTextTest {
     }
 
     @Test
-    public void classpath() throws Exception {
+    public void hierarchical() throws TemplateException {
         MatcherAssert.assertThat(
-            new RsText(
-                "classpath.md",
-                new PathOf("src{0}main{0}resources")
-                    .value()
-                    .toFile()
-                    .getAbsolutePath()
-            ).compose(
-                new ArgOf(
-                    "systems",
-                    new ListOf<>(
-                        new MapEntry<>("Windows", 10),
-                        new MapEntry<>("Linux", 16),
-                        new MapEntry<>("Mac OS", 12)
-                    )
-                )
-            ),
+            new Text("query.sql", "src/test/resources")
+                .compose(
+                    new ArgOf("flag", true)
+                ),
             Matchers.equalTo(
-                "| OS | Version |\n"
-                    + "|---|---|\n"
-                    + "| Windows | 10 |\n"
-                    + "| Linux | 16 |\n"
-                    + "| Mac OS | 12 |\n"
+                "select 1 from dual\nunion\nselect 2 from dual\n"
             )
         );
     }
 
-    @Test(expected = RsException.class)
-    public void templateIsNull() throws RsException {
-        new RsText(null, "").compose();
+    @Test(expected = TemplateException.class)
+    public void templateIsNull() throws TemplateException {
+        new Text(null, "").compose();
     }
 
-    @Test(expected = RsException.class)
-    public void rootDirectoryIsNull() throws RsException {
-        new RsText("no-root.txt").compose();
+    @Test(expected = TemplateException.class)
+    public void rootDirectoryIsNull() throws TemplateException {
+        new Text("no-root.txt").compose();
     }
 }

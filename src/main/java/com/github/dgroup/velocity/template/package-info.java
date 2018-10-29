@@ -21,44 +21,7 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.rs;
-
-import com.github.dgroup.velocity.Resource;
-import com.github.dgroup.velocity.Resources;
-import org.cactoos.Func;
-import org.cactoos.func.StickyFunc;
-
 /**
- * The envelope for {@link Resources}.
- *
- * @param <T> The type of resource.
- *
- * @since 0.2.0
+ * Templates.
  */
-public class ResourcesEnvelope<T> implements Resources<T> {
-
-    /**
-     * The function to evaluate the velocity resource by filename.
-     */
-    private final Func<String, Resource<T>> fnc;
-
-    /**
-     * Ctor.
-     * @param fnc The function to evaluate the velocity resource by filename.
-     */
-    public ResourcesEnvelope(final Func<String, Resource<T>> fnc) {
-        this.fnc = new StickyFunc<>(fnc);
-    }
-
-    @Override
-    @SuppressWarnings("PMD.AvoidCatchingGenericException")
-    public final Resource<T> find(final String fname) throws RsException {
-        // @checkstyle IllegalCatchCheck (5 lines)
-        try {
-            return this.fnc.apply(fname);
-        } catch (final Exception cause) {
-            throw new RsException(cause);
-        }
-    }
-
-}
+package com.github.dgroup.velocity.template;

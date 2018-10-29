@@ -22,6 +22,6 @@
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
 /**
- * The path(s) to velocity resources.
+ * The path(s) to velocity templates.
  */
 package com.github.dgroup.velocity.path;

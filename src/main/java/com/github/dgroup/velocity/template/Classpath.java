@@ -21,7 +21,7 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package com.github.dgroup.velocity.rs;
+package com.github.dgroup.velocity.template;
 
 import com.github.dgroup.velocity.path.RelativePath;
 import java.text.MessageFormat;
@@ -29,11 +29,13 @@ import org.cactoos.Scalar;
 import org.cactoos.io.InputOf;
 
 /**
- * Velocity resource from the classpath.
+ * Velocity template from the classpath.
  *
  * @since 0.2.0
+ * @todo #/DEV:30min Add constructor RsClasspath(String) with relative path.
+ *  Ensure that getResourceAsStream works on WinOs with '/' symbol.
  */
-public final class RsClasspath extends RsEnvelope {
+public final class Classpath extends TemplateEnvelope {
 
     /**
      * Build relative path to the resource from the classpath.
@@ -43,7 +45,7 @@ public final class RsClasspath extends RsEnvelope {
      * @param pattern The pattern for {@link MessageFormat#format}.
      * @param args The arguments for {@link MessageFormat#format}.
      */
-    public RsClasspath(final String pattern, final Object... args) {
+    public Classpath(final String pattern, final Object... args) {
         this(new RelativePath(pattern, args));
     }
 
@@ -54,7 +56,7 @@ public final class RsClasspath extends RsEnvelope {
      *  {@code src/main/resources/com/xxx/rs.txt} then relative path is
      *  {@code com/xxx/rs.txt}.
      */
-    public RsClasspath(final Scalar<String> rscr) {
+    public Classpath(final Scalar<String> rscr) {
         super(
             rscr,
             () -> {

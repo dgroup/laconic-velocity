@@ -24,8 +24,8 @@
 
 package com.github.dgroup.velocity.arg.iterable;
 
-import com.github.dgroup.velocity.rs.RsClasspath;
-import com.github.dgroup.velocity.rs.RsException;
+import com.github.dgroup.velocity.template.Classpath;
+import com.github.dgroup.velocity.template.TemplateException;
 import java.io.File;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -43,9 +43,9 @@ import org.junit.Test;
 public final class MappedTest {
 
     @Test
-    public void mapped() throws RsException {
+    public void mapped() throws TemplateException {
         MatcherAssert.assertThat(
-            new RsClasspath("velocity{0}mapped.md", File.separator)
+            new Classpath("velocity{0}mapped.md", File.separator)
                 .compose(
                     new Mapped<>(
                         "systems",

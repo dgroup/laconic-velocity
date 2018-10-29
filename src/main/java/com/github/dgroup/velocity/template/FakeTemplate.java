@@ -21,40 +21,47 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
  * OR OTHER DEALINGS IN THE SOFTWARE.
  */
+package com.github.dgroup.velocity.template;
 
-package com.github.dgroup.velocity.rs;
-
-import com.github.dgroup.velocity.arg.ArgOf;
-import com.github.dgroup.velocity.path.RelativePath;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import com.github.dgroup.velocity.Arg;
+import com.github.dgroup.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.cactoos.Scalar;
 
 /**
- * Unit tests for class {@link RsClasspath}.
+ * Fake implementation for unit testing purposes.
  *
- * @since 0.2
- * @checkstyle JavadocMethodCheck (500 lines)
+ * @param <T> Type of fake resource.
+ * @since 0.1.0
  */
-@SuppressWarnings("PMD.AvoidDuplicateLiterals")
-public final class RsClasspathTest {
+public final class FakeTemplate<T> implements Template<T> {
 
-    @Test
-    public void classpath() throws Exception {
-        MatcherAssert.assertThat(
-            new RsClasspath(
-                new RelativePath("velocity{0}cls-loader.md")
-            ).compose(
-                new ArgOf("way", "getResourceAsStream")
-            ),
-            Matchers.equalTo(
-                "I'm going to use `getResourceAsStream` here."
-            )
-        );
+    /**
+     * The fake resource.
+     */
+    private final T val;
+
+    /**
+     * Ctor.
+     * @param val The fake resource.
+     */
+    public FakeTemplate(final T val) {
+        this.val = val;
     }
 
-    @Test(expected = RsException.class)
-    public void resourceIsNull() throws RsException {
-        new RsClasspath(() -> null).compose();
+    @Override
+    public T compose(final Arg... args) {
+        return this.val;
     }
+
+    @Override
+    public T compose(final Iterable<Arg> args) {
+        return this.val;
+    }
+
+    @Override
+    public T compose(final Scalar<VelocityContext> ctx) {
+        return this.val;
+    }
+
 }
