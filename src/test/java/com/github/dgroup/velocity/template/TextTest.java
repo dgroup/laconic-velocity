@@ -25,6 +25,7 @@ package com.github.dgroup.velocity.template;
 
 import com.github.dgroup.velocity.arg.ArgOf;
 import com.github.dgroup.velocity.path.PathOf;
+import com.github.dgroup.velocity.path.RelativePath;
 import org.cactoos.list.ListOf;
 import org.cactoos.map.MapEntry;
 import org.hamcrest.MatcherAssert;
@@ -117,6 +118,25 @@ public final class TextTest {
                 "select 1 from dual\nunion\nselect 2 from dual\n"
             )
         );
+    }
+
+    @Test
+    public void classpath() throws TemplateException {
+        MatcherAssert.assertThat(
+            new Text(
+                new RelativePath("velocity/cls-loader.md")
+            ).compose(
+                new ArgOf("way", "getResourceAsStream")
+            ),
+            Matchers.equalTo(
+                "I'm going to use `getResourceAsStream` here."
+            )
+        );
+    }
+
+    @Test(expected = TemplateException.class)
+    public void resourceIsNull() throws TemplateException {
+        new Text(null).compose();
     }
 
     @Test(expected = TemplateException.class)

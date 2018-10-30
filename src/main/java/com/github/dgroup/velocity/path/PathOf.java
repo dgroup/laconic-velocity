@@ -28,14 +28,14 @@ import java.nio.file.Paths;
 import java.text.MessageFormat;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.text.UncheckedText;
 
 /**
  * The path to the resource.
  *
  * @since 0.1.0
  */
-public final class PathOf implements Scalar<Path> {
+public final class PathOf implements Scalar<Path>, Text {
 
     /**
      * The path.
@@ -83,9 +83,11 @@ public final class PathOf implements Scalar<Path> {
 
     @Override
     public String toString() {
-        return new UncheckedScalar<>(this)
-            .value()
-            .toAbsolutePath()
-            .toString();
+        return new UncheckedText((Text) this).asString();
+    }
+
+    @Override
+    public String asString() throws Exception {
+        return this.value().toAbsolutePath().toString();
     }
 }

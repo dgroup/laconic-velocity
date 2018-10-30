@@ -40,7 +40,7 @@ public final class RelativePathTest {
     @Test
     public void toPath() throws Exception {
         MatcherAssert.assertThat(
-            new RelativePath("velocity{0}cls-loader.md")
+            new RelativePath("velocity/cls-loader.md")
                 .toPath()
                 .value()
                 .toFile()
