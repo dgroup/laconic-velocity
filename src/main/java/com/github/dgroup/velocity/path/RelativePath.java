@@ -85,7 +85,7 @@ public final class RelativePath implements Scalar<String>, Text {
 
     @Override
     public String toString() {
-        return new UncheckedText((Text)this).asString();
+        return new UncheckedText((Text) this).asString();
     }
 
     /**
