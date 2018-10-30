@@ -102,7 +102,7 @@ dependencies {
       @Test
       public void classpath() throws TemplateException {
           MatcherAssert.assertThat(
-              new Classpath(new RelativePath("velocity{0}query.sql"))
+              new Text(new RelativePath("velocity/query.sql"))
                   .compose(
                       new ArgOf("flag", true)
                   ),
@@ -112,4 +112,4 @@ dependencies {
           );
       }
       ```
-      See [more](/src/test/java/com/github/dgroup/velocity/template/ClasspathTest.java).
+      See [more](/src/test/java/com/github/dgroup/velocity/template/ClasspathTest.java#L124).

@@ -124,7 +124,7 @@ public final class TextTest {
     public void classpath() throws TemplateException {
         MatcherAssert.assertThat(
             new Text(
-                new RelativePath("velocity{0}cls-loader.md")
+                new RelativePath("velocity/cls-loader.md")
             ).compose(
                 new ArgOf("way", "getResourceAsStream")
             ),

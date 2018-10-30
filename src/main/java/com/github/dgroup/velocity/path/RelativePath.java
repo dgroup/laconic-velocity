@@ -46,11 +46,10 @@ public final class RelativePath implements Scalar<String>, Text {
 
     /**
      * Ctor.
-     * @param pattern The path pattern for {@link MessageFormat#format}.
-     *  The default delimiter is '/' path separator.
+     * @param path The relative path to the velocity template
      */
-    public RelativePath(final String pattern) {
-        this(pattern, '/');
+    public RelativePath(final String path) {
+        this((Scalar<String>) () -> path);
     }
 
     /**
