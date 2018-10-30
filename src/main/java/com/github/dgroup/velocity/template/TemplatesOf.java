@@ -24,11 +24,13 @@
 package com.github.dgroup.velocity.template;
 
 import com.github.dgroup.velocity.Template;
+import com.github.dgroup.velocity.path.RelativePath;
 import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
 import org.cactoos.map.StickyMap;
+import org.cactoos.text.TextOf;
 
 /**
  * The storage for textual velocity templates.
@@ -41,7 +43,7 @@ public final class TemplatesOf extends TemplatesEnvelope<String> {
      * Detect the velocity templates in the classpath.
      */
     public TemplatesOf() {
-        this(Classpath::new);
+        this(fpath -> new Text(new RelativePath(new TextOf(fpath))));
     }
 
     /**

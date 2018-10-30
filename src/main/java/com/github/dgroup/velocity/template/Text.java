@@ -24,8 +24,10 @@
 
 package com.github.dgroup.velocity.template;
 
+import com.github.dgroup.velocity.path.RelativePath;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import org.cactoos.Input;
 import org.cactoos.Scalar;
 import org.cactoos.io.Directory;
 import org.cactoos.io.InputOf;
@@ -64,7 +66,7 @@ public final class Text extends TemplateEnvelope {
      */
     @SafeVarargs
     public Text(final String tname, final Scalar<Path>... roots) {
-        super(
+        this(
             () -> tname,
             () -> {
                 if (tname == null || tname.trim().isEmpty()) {
@@ -92,6 +94,42 @@ public final class Text extends TemplateEnvelope {
                 );
             }
         );
+    }
+
+    /**
+     * Find template from the classpath.
+     * @param rscr The relative path to resource from the classpath.
+     *  For example, in case if you resource is placed to
+     *  {@code src/main/resources/com/xxx/rs.txt} then relative path is
+     *  {@code com/xxx/rs.txt}.
+     */
+    public Text(final RelativePath rscr) {
+        this(
+            rscr,
+            () -> {
+                if (rscr == null || rscr.value() == null) {
+                    throw new IllegalArgumentException(
+                        "The resource path can't be a null"
+                    );
+                }
+                return new InputOf(
+                    Thread.currentThread()
+                        .getContextClassLoader()
+                        .getResourceAsStream(rscr.value())
+                );
+            }
+        );
+    }
+
+    /**
+     * Ctor.
+     * @param tname The name of Velocity template.
+     * @param src The Velocity template as {@link org.cactoos.Input}.
+     *  The input stream will be closed automatically by
+     *  {@link TemplateEnvelope}.
+     */
+    private Text(final Scalar<String> tname, final Scalar<Input> src) {
+        super(tname, src);
     }
 
 }
