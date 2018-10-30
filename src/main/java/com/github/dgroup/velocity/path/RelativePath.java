@@ -28,7 +28,7 @@ import java.nio.file.Paths;
 import java.text.MessageFormat;
 import org.cactoos.Scalar;
 import org.cactoos.Text;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.text.UncheckedText;
 
 /**
  * Relative path.
@@ -37,7 +37,7 @@ import org.cactoos.scalar.UncheckedScalar;
  *
  * @since 0.2
  */
-public final class RelativePath implements Scalar<String> {
+public final class RelativePath implements Scalar<String>, Text {
 
     /**
      * The relative path.
@@ -85,7 +85,7 @@ public final class RelativePath implements Scalar<String> {
 
     @Override
     public String toString() {
-        return new UncheckedScalar<>(this).value();
+        return new UncheckedText((Text)this).asString();
     }
 
     /**
@@ -93,7 +93,11 @@ public final class RelativePath implements Scalar<String> {
      * @return The path.
      */
     public Scalar<Path> toPath() {
-        return () -> Paths.get(this.toString());
+        return () -> Paths.get(this.asString());
     }
 
+    @Override
+    public String asString() throws Exception {
+        return this.value();
+    }
 }
