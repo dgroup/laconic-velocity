@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](./license.txt) 
 [![Commit activity](https://img.shields.io/github/commit-activity/y/dgroup/velocity.svg?style=flat-square)](https://github.com/dgroup/velocity/graphs/commit-activity)
 
-[![Build Status](https://travis-ci.org/dgroup/velocity.svg?branch=master&style=for-the-badge)](https://travis-ci.org/dgroup/velocity)
+[![Build Status](https://travis-ci.org/dgroup/laconic-velocity.svg?branch=master&style=for-the-badge)](https://travis-ci.org/dgroup/velocity)
 [![0pdd](http://www.0pdd.com/svg?name=dgroup/velocity)](http://www.0pdd.com/p?name=dgroup/velocity)
 [![Dependency Status](https://requires.io/github/dgroup/velocity/requirements.svg?branch=master)](https://requires.io/github/dgroup/velocity/requirements/?branch=master)
 [![Known Vulnerabilities](https://snyk.io/test/github/dgroup/velocity/badge.svg)](https://snyk.io/org/dgroup/project/58b731a9-6b07-4ccf-9044-ad305ad243e6/?tab=dependencies&vulns=vulnerable)
