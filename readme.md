@@ -1,22 +1,22 @@
-[![Maven](https://img.shields.io/maven-central/v/com.github.dgroup/velocity.svg)](https://mvnrepository.com/artifact/com.github.dgroup/velocity)
-[![Javadocs](http://www.javadoc.io/badge/com.github.dgroup/velocity.svg)](http://www.javadoc.io/doc/com.github.dgroup/velocity)
+[![Maven](https://img.shields.io/maven-central/v/com.github.dgroup/laconic-velocity.svg)](https://mvnrepository.com/artifact/com.github.dgroup/laconic-velocity)
+[![Javadocs](http://www.javadoc.io/badge/com.github.dgroup/laconic-velocity.svg)](http://www.javadoc.io/doc/com.github.dgroup/laconic-velocity)
 [![License: MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](./license.txt) 
-[![Commit activity](https://img.shields.io/github/commit-activity/y/dgroup/velocity.svg?style=flat-square)](https://github.com/dgroup/velocity/graphs/commit-activity)
+[![Commit activity](https://img.shields.io/github/commit-activity/y/dgroup/laconic-velocity.svg?style=flat-square)](https://github.com/dgroup/laconic-velocity/graphs/commit-activity)
 
-[![Build Status](https://travis-ci.org/dgroup/laconic-velocity.svg?branch=master&style=for-the-badge)](https://travis-ci.org/dgroup/velocity)
-[![0pdd](http://www.0pdd.com/svg?name=dgroup/velocity)](http://www.0pdd.com/p?name=dgroup/velocity)
+[![Build Status](https://travis-ci.org/dgroup/laconic-velocity.svg?branch=master&style=for-the-badge)](https://travis-ci.org/dgroup/laconic-velocity)
+[![0pdd](http://www.0pdd.com/svg?name=dgroup/laconic-velocity)](http://www.0pdd.com/p?name=dgroup/laconic-velocity)
 [![Dependency Status](https://requires.io/github/dgroup/laconic-velocity/requirements.svg?branch=dev)](https://requires.io/github/dgroup/laconic-velocity/requirements/?branch=dev)
-[![Known Vulnerabilities](https://snyk.io/test/github/dgroup/velocity/badge.svg)](https://snyk.io/org/dgroup/project/58b731a9-6b07-4ccf-9044-ad305ad243e6/?tab=dependencies&vulns=vulnerable)
+[![Known Vulnerabilities](https://snyk.io/test/github/dgroup/laconic-velocity/badge.svg)](https://snyk.io/org/dgroup/project/58b731a9-6b07-4ccf-9044-ad305ad243e6/?tab=dependencies&vulns=vulnerable)
 
-[![DevOps By Rultor.com](http://www.rultor.com/b/dgroup/velocity)](http://www.rultor.com/p/dgroup/velocity)
+[![DevOps By Rultor.com](http://www.rultor.com/b/dgroup/laconic-velocity)](http://www.rultor.com/p/dgroup/laconic-velocity)
 [![EO badge](http://www.elegantobjects.org/badge.svg)](http://www.elegantobjects.org/#principles)
 [![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Qulice](https://img.shields.io/badge/qulice-passed-blue.svg)](http://www.qulice.com/)
 [![SQ passed](https://sonarcloud.io/api/project_badges/measure?project=com.github.dgroup%3Avelocity&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.github.dgroup%3Avelocity)
 [![Codebeat](https://codebeat.co/badges/7bf04e42-06e8-461f-aea8-ea1e196f22de)](https://codebeat.co/projects/github-com-dgroup-laconic-velocity-master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/011685357fc44898a8538d3e51d8da70)](https://www.codacy.com/app/dgroup/velocity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/velocity&amp;utm_campaign=Badge_Grade)
-[![Codecov](https://codecov.io/gh/dgroup/velocity/branch/master/graph/badge.svg?token=Pqdeao3teI)](https://codecov.io/gh/dgroup/velocity)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/011685357fc44898a8538d3e51d8da70)](https://www.codacy.com/app/dgroup/laconic-velocity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/laconic-velocity&amp;utm_campaign=Badge_Grade)
+[![Codecov](https://codecov.io/gh/dgroup/laconic-velocity/branch/master/graph/badge.svg?token=Pqdeao3teI)](https://codecov.io/gh/dgroup/laconic-velocity)
 
 **ATTENTION**: We're still in a very early alpha version, the API
 may and _will_ change frequently. Please, use it at your own risk,
@@ -26,17 +26,17 @@ Maven:
 ```xml
 <dependency>
     <groupId>com.github.dgroup</groupId>
-    <artifactId>velocity</artifactId>
+    <artifactId>laconic-velocity</artifactId>
 </dependency>
 ```
 Gradle:
 ```groovy
 dependencies {
-    compile 'com.github.dgroup:velocity:<version>'
+    compile 'com.github.dgroup:laconic-velocity:<version>'
 }
 ```
 ## Get started
-**Generate the text/sql/xml/markdown/json/etc based on velocity [template](/src/main/java/com/github/dgroup/velocity/Template.java).**
+**Generate the text/sql/xml/markdown/json/etc based on Apache Velocity [template](/src/main/java/com/github/dgroup/velocity/Template.java).**
  1. Define velocity template `query.sql`
     ```sql
     select 1 from dual
