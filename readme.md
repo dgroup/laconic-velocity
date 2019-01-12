@@ -1,5 +1,5 @@
-[![Maven](https://img.shields.io/maven-central/v/com.github.dgroup/laconic-velocity.svg)](https://mvnrepository.com/artifact/com.github.dgroup/laconic-velocity)
-[![Javadocs](http://www.javadoc.io/badge/com.github.dgroup/laconic-velocity.svg)](http://www.javadoc.io/doc/com.github.dgroup/laconic-velocity)
+[![Maven](https://img.shields.io/maven-central/v/com.github.dgroup/velocity.svg)](https://mvnrepository.com/artifact/com.github.dgroup/velocity)
+[![Javadocs](http://www.javadoc.io/badge/com.github.dgroup/velocity.svg)](http://www.javadoc.io/doc/com.github.dgroup/velocity)
 [![License: MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](./license.txt) 
 [![Commit activity](https://img.shields.io/github/commit-activity/y/dgroup/laconic-velocity.svg?style=flat-square)](https://github.com/dgroup/laconic-velocity/graphs/commit-activity)
 
@@ -26,13 +26,13 @@ Maven:
 ```xml
 <dependency>
     <groupId>com.github.dgroup</groupId>
-    <artifactId>laconic-velocity</artifactId>
+    <artifactId>velocity</artifactId>
 </dependency>
 ```
 Gradle:
 ```groovy
 dependencies {
-    compile 'com.github.dgroup:laconic-velocity:<version>'
+    compile 'com.github.dgroup:velocity:<version>'
 }
 ```
 ## Get started
