@@ -13,7 +13,7 @@
 [![We recommend IntelliJ IDEA](http://www.elegantobjects.org/intellij-idea.svg)](https://www.jetbrains.com/idea/)
 
 [![Qulice](https://img.shields.io/badge/qulice-passed-blue.svg)](http://www.qulice.com/)
-[![SQ passed](https://sonarcloud.io/api/project_badges/measure?project=com.github.dgroup%3Avelocity&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.github.dgroup%3Avelocity)
+[![SQ passed](https://sonarcloud.io/api/project_badges/measure?project=com.github.dgroup%3Alaconic-velocity&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.github.dgroup%3Alaconic-velocity)
 [![Codebeat](https://codebeat.co/badges/7bf04e42-06e8-461f-aea8-ea1e196f22de)](https://codebeat.co/projects/github-com-dgroup-laconic-velocity-master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/011685357fc44898a8538d3e51d8da70)](https://www.codacy.com/app/dgroup/laconic-velocity?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dgroup/laconic-velocity&amp;utm_campaign=Badge_Grade)
 [![Codecov](https://codecov.io/gh/dgroup/laconic-velocity/branch/master/graph/badge.svg?token=Pqdeao3teI)](https://codecov.io/gh/dgroup/laconic-velocity)
