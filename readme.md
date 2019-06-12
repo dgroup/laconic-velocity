@@ -70,10 +70,9 @@ dependencies {
       @Test
       public void transformSql() throws TemplateException {
           MatcherAssert.assertThat(
-              new Text("query.sql", "src/test/resources/velocity")
-                  .compose(
-                      new ArgOf("flag", true)
-                   ),
+              new Text("query.sql", "src/test/resources/velocity").compose(
+                  new ArgOf("flag", true)
+              ),
               Matchers.equalTo(
                   "select 1 from dual\nunion\nselect 2 from dual\n"
               )
@@ -86,10 +85,9 @@ dependencies {
       @Test
       public void hierarchical() throws TemplateException {
           MatcherAssert.assertThat(
-              new Text("query.sql", "src/test/resources"))
-                  .compose(
-                      new ArgOf("flag", true)
-                  ),
+              new Text("query.sql", "src/test/resources").compose(
+                  new ArgOf("flag", true)
+              ),
               Matchers.equalTo(
                   "select 1 from dual\nunion\nselect 2 from dual\n"
               )
@@ -102,10 +100,9 @@ dependencies {
       @Test
       public void classpath() throws TemplateException {
           MatcherAssert.assertThat(
-              new Text(new RelativePath("velocity/query.sql"))
-                  .compose(
-                      new ArgOf("flag", true)
-                  ),
+              new Text(new RelativePath("velocity/query.sql")).compose(
+                  new ArgOf("flag", true)
+              ),
               Matchers.equalTo(
                   "select 1 from dual\nunion\nselect 2 from dual\n"
               )
