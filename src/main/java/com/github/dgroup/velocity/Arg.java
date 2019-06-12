@@ -23,6 +23,8 @@
  */
 package com.github.dgroup.velocity;
 
+import org.cactoos.Scalar;
+
 /**
  * The resource variable.
  *
@@ -31,7 +33,7 @@ package com.github.dgroup.velocity;
  * @param <V> Type of item.
  * @since 0.1.0
  */
-public interface Arg<V> {
+public interface Arg<V> extends Scalar<V> {
 
     /**
      * Label of variable in Apache Velocity template.
