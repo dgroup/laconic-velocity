@@ -29,7 +29,7 @@ import java.util.Map;
 import org.cactoos.Func;
 import org.cactoos.map.MapEntry;
 import org.cactoos.map.MapOf;
-import org.cactoos.map.StickyMap;
+import org.cactoos.map.Sticky;
 import org.cactoos.text.TextOf;
 
 /**
@@ -61,7 +61,7 @@ public final class TemplatesOf extends TemplatesEnvelope<String> {
      */
     @SafeVarargs
     public TemplatesOf(final MapEntry<String, Template<String>>... rsrcs) {
-        this(new StickyMap<>(new MapOf<>(rsrcs)));
+        this(new Sticky<>(new MapOf<>(rsrcs)));
     }
 
     /**

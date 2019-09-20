@@ -25,7 +25,7 @@ package com.github.dgroup.velocity.arg;
 
 import com.github.dgroup.velocity.Arg;
 import org.cactoos.Scalar;
-import org.cactoos.scalar.UncheckedScalar;
+import org.cactoos.scalar.Unchecked;
 
 /**
  * Envelope for {@link Arg}.
@@ -43,7 +43,7 @@ public class ArgEnvelope<V> implements Arg<V> {
     /**
      * The Apache Velocity variable value, specified in template file.
      */
-    private final UncheckedScalar<V> val;
+    private final Unchecked<V> val;
 
     /**
      * Ctor.
@@ -52,7 +52,7 @@ public class ArgEnvelope<V> implements Arg<V> {
      */
     public ArgEnvelope(final String key, final Scalar<V> val) {
         this.key = key;
-        this.val = new UncheckedScalar<>(val);
+        this.val = new Unchecked<>(val);
     }
 
     @Override
