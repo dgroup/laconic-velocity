@@ -2,6 +2,7 @@
 [![Javadocs](http://www.javadoc.io/badge/com.github.dgroup/laconic-velocity.svg)](http://www.javadoc.io/doc/com.github.dgroup/laconic-velocity)
 [![License: MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](./license.txt) 
 [![Commit activity](https://img.shields.io/github/commit-activity/y/dgroup/laconic-velocity.svg?style=flat-square)](https://github.com/dgroup/laconic-velocity/graphs/commit-activity)
+[![Hits-of-Code](https://hitsofcode.com/github/dgroup/laconic-velocity)](https://hitsofcode.com/view/github/dgroup/laconic-velocity)
 
 [![Build Status](https://travis-ci.org/dgroup/laconic-velocity.svg?branch=master&style=for-the-badge)](https://travis-ci.org/dgroup/laconic-velocity)
 [![0pdd](http://www.0pdd.com/svg?name=dgroup/laconic-velocity)](http://www.0pdd.com/p?name=dgroup/laconic-velocity)
