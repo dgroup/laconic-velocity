@@ -87,7 +87,7 @@
     <commons-logging.version>1.2</commons-logging.version>
     <commons-collections.version>3.2.2</commons-collections.version>
     <!-- General dependencies -->
-    <cactoos.version>0.42</cactoos.version>
+    <cactoos.version>0.50</cactoos.version>
     <velocity.version>1.7</velocity.version>
     <jcabi-xml.version>0.21.4</jcabi-xml.version>
     <jcabi-matchers.version>1.4</jcabi-matchers.version>
